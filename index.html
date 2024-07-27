@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Text</title>
+    <title>Fixed Font Size Text</title>
     <style>
         body, html {
             height: 100%;
@@ -12,42 +12,14 @@
             justify-content: center;
             align-items: center;
             font-family: Copperplate, "Copperplate Gothic Light", fantasy;
-            overflow: hidden;
         }
         #text {
+            font-size: 21pt;
             text-align: center;
-            white-space: nowrap;
-            font-size: 20vw;
         }
     </style>
 </head>
 <body>
     <div id="text">GET FUCKED LOL</div>
-
-    <script>
-        function adjustFontSize() {
-            const text = document.getElementById('text');
-            const container = document.body;
-            let fontSize = 20;
-            text.style.fontSize = fontSize + 'vw';
-
-            if (text.offsetWidth > container.offsetWidth || text.offsetHeight > container.offsetHeight) {
-                while (text.offsetWidth > container.offsetWidth || text.offsetHeight > container.offsetHeight) {
-                    fontSize -= 0.5;
-                    text.style.fontSize = fontSize + 'vw';
-                }
-            } else {
-                while (text.offsetWidth < container.offsetWidth && text.offsetHeight < container.offsetHeight) {
-                    fontSize += 0.5;
-                    text.style.fontSize = fontSize + 'vw';
-                }
-                fontSize -= 0.5;
-                text.style.fontSize = fontSize + 'vw';
-            }
-        }
-
-        window.addEventListener('load', adjustFontSize);
-        window.addEventListener('resize', adjustFontSize);
-    </script>
 </body>
 </html>
