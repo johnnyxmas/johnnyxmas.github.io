@@ -17,7 +17,7 @@
         #text {
             text-align: center;
             white-space: nowrap;
-            width: 100vw;
+            font-size: 20vw;
         }
     </style>
 </head>
@@ -28,16 +28,22 @@
         function adjustFontSize() {
             const text = document.getElementById('text');
             const container = document.body;
-            let fontSize = 1;
-            text.style.fontSize = fontSize + 'px';
+            let fontSize = 20;
+            text.style.fontSize = fontSize + 'vw';
 
-            while (text.offsetWidth < container.offsetWidth && text.offsetHeight < container.offsetHeight) {
-                fontSize++;
-                text.style.fontSize = fontSize + 'px';
+            if (text.offsetWidth > container.offsetWidth || text.offsetHeight > container.offsetHeight) {
+                while (text.offsetWidth > container.offsetWidth || text.offsetHeight > container.offsetHeight) {
+                    fontSize -= 0.5;
+                    text.style.fontSize = fontSize + 'vw';
+                }
+            } else {
+                while (text.offsetWidth < container.offsetWidth && text.offsetHeight < container.offsetHeight) {
+                    fontSize += 0.5;
+                    text.style.fontSize = fontSize + 'vw';
+                }
+                fontSize -= 0.5;
+                text.style.fontSize = fontSize + 'vw';
             }
-
-            fontSize -= 2; // Reduce by 2 to ensure it's within bounds
-            text.style.fontSize = fontSize + 'px';
         }
 
         window.addEventListener('load', adjustFontSize);
