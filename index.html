@@ -1,4 +1,4 @@
-Certainly, I'll modify the code to use Copperplate font and ensure the text size adjusts dynamically to fit the entire phrase inside the window. Here's the updated HTML:
+I understand. I'll modify the code to ensure the font size adjusts properly for mobile devices as well. Here's the updated HTML with improved responsiveness:
 
 ```html
 <!DOCTYPE html>
@@ -18,9 +18,11 @@ Certainly, I'll modify the code to use Copperplate font and ensure the text size
         }
         #text {
             text-align: center;
-            white-space: nowrap;
+            white-space: normal;
             padding: 20px;
             box-sizing: border-box;
+            max-width: 90vw;
+            word-wrap: break-word;
         }
     </style>
 </head>
@@ -34,13 +36,19 @@ Certainly, I'll modify the code to use Copperplate font and ensure the text size
             let fontSize = 1;
             text.style.fontSize = fontSize + 'px';
 
-            while (text.offsetWidth < container.offsetWidth * 0.95 && text.offsetHeight < container.offsetHeight * 0.95) {
+            while (text.offsetWidth < container.offsetWidth * 0.9 && text.offsetHeight < container.offsetHeight * 0.9) {
                 fontSize++;
                 text.style.fontSize = fontSize + 'px';
             }
 
             fontSize--;
             text.style.fontSize = fontSize + 'px';
+
+            // Ensure text is not too small on mobile
+            if (fontSize < 16) {
+                fontSize = 16;
+                text.style.fontSize = fontSize + 'px';
+            }
         }
 
         window.addEventListener('load', adjustFontSize);
