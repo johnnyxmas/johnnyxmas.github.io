@@ -31,12 +31,12 @@
             let fontSize = 1;
             text.style.fontSize = fontSize + 'px';
 
-            while (text.offsetWidth < container.offsetWidth) {
+            while (text.offsetWidth < container.offsetWidth && text.offsetHeight < container.offsetHeight) {
                 fontSize++;
                 text.style.fontSize = fontSize + 'px';
             }
 
-            fontSize--;
+            fontSize -= 2; // Reduce by 2 to ensure it's within bounds
             text.style.fontSize = fontSize + 'px';
         }
 
