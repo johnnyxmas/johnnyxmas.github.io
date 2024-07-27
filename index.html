@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Text</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }
+        #text {
+            text-align: center;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="text">GET FUCKED LOL</div>
+
+    <script>
+        function adjustFontSize() {
+            const text = document.getElementById('text');
+            const container = document.body;
+            let fontSize = 100;
+            text.style.fontSize = fontSize + 'px';
+
+            while (text.offsetWidth < container.offsetWidth * 0.9 && text.offsetHeight < container.offsetHeight * 0.9) {
+                fontSize++;
+                text.style.fontSize = fontSize + 'px';
+            }
+
+            while (text.offsetWidth > container.offsetWidth || text.offsetHeight > container.offsetHeight) {
+                fontSize--;
+                text.style.fontSize = fontSize + 'px';
+            }
+        }
+
+        window.addEventListener('load', adjustFontSize);
+        window.addEventListener('resize', adjustFontSize);
+    </script>
+</body>
+</html>
