@@ -1,3 +1,6 @@
+Certainly, I'll modify the code to use Copperplate font and ensure the text size adjusts dynamically to fit the entire phrase inside the window. Here's the updated HTML:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +14,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-family: Copperplate, "Copperplate Gothic Light", fantasy;
         }
         #text {
             text-align: center;
             white-space: nowrap;
+            padding: 20px;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -26,18 +31,16 @@
         function adjustFontSize() {
             const text = document.getElementById('text');
             const container = document.body;
-            let fontSize = 100;
+            let fontSize = 1;
             text.style.fontSize = fontSize + 'px';
 
-            while (text.offsetWidth < container.offsetWidth * 0.9 && text.offsetHeight < container.offsetHeight * 0.9) {
+            while (text.offsetWidth < container.offsetWidth * 0.95 && text.offsetHeight < container.offsetHeight * 0.95) {
                 fontSize++;
                 text.style.fontSize = fontSize + 'px';
             }
 
-            while (text.offsetWidth > container.offsetWidth || text.offsetHeight > container.offsetHeight) {
-                fontSize--;
-                text.style.fontSize = fontSize + 'px';
-            }
+            fontSize--;
+            text.style.fontSize = fontSize + 'px';
         }
 
         window.addEventListener('load', adjustFontSize);
@@ -45,3 +48,6 @@
     </script>
 </body>
 </html>
+```
+
+Would you like me to explain or break down this code?
