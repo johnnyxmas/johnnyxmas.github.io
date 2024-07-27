@@ -12,14 +12,12 @@
             justify-content: center;
             align-items: center;
             font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+            overflow: hidden;
         }
         #text {
             text-align: center;
-            white-space: normal;
-            padding: 20px;
-            box-sizing: border-box;
-            max-width: 90vw;
-            word-wrap: break-word;
+            white-space: nowrap;
+            width: 100vw;
         }
     </style>
 </head>
@@ -33,18 +31,13 @@
             let fontSize = 1;
             text.style.fontSize = fontSize + 'px';
 
-            while (text.offsetWidth < container.offsetWidth * 0.9 && text.offsetHeight < container.offsetHeight * 0.9) {
+            while (text.offsetWidth < container.offsetWidth) {
                 fontSize++;
                 text.style.fontSize = fontSize + 'px';
             }
 
             fontSize--;
             text.style.fontSize = fontSize + 'px';
-
-            if (fontSize < 16) {
-                fontSize = 16;
-                text.style.fontSize = fontSize + 'px';
-            }
         }
 
         window.addEventListener('load', adjustFontSize);
