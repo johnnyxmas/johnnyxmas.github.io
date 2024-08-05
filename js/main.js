@@ -5,7 +5,7 @@
     .then(fp => fp.get())
     .then(result => {
       const visitorId = result.visitorId
-      if (visitorId) fetch('https://api.crowdstrikeubereats.com/prod/visitor', {
+      if (visitorId) fetch('https://api.crowdstrikeubereats.com/visitor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -15,7 +15,7 @@
 
 
     async function fetchStats() {
-      const response = await fetch('https://api.crowdstrikeubereats.com/prod/stats')
+      const response = await fetch('https://api.crowdstrikeubereats.com/stats')
       const data = await response.json();
       return data.stats;
     }
