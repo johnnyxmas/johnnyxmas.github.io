@@ -3,34 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5; URL=https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+    <meta http-equiv="refresh" content="15; URL=https://www.youtube.com/watch?v=dQw4w9WgXcQ">
     <title>Not Crowdstrike or Uber</title>
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        #main-text {
-            font-family: Copperplate, "Copperplate Gothic Light", fantasy;
-            font-size: 21pt;
-            text-align: center;
-        }
-        #sub-text {
-            font-family: Avenir, Helvetica, Arial, sans-serif;
-            font-size: 8pt;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            text-align: right;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/main.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div id="main-text">GET FUCKED LOL</div>
-    <div id="sub-text">thank you for participating in this satirical piece of satire from Johnny Xmas and Carl Cosmos.</div>
+<body class="h-screen flex flex-col justify-center items-center">
+    <div class="font-copperplate text-4xl text-center mb-8">GET FUCKED LOL</div>
+    <div class="flex flex-box">
+        <canvas id="browserStatsChart"></canvas>
+    </div>
+    <p class="font-avenir text-xs absolute bottom-2 right-2 text-right">thank you for participating in this satirical piece of satire from Johnny Xmas and Carl Cosmos.</p>
 </body>
 </html>
