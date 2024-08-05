@@ -15,16 +15,16 @@
 
 
     async function fetchStats() {
-      const response = await fetch('https://api.crowdstrikeubereats.com/prod/stats');
+      const response = await fetch('https://api.crowdstrikeubereats.com/prod/stats')
       const data = await response.json();
       return data.stats;
     }
 
     function renderChart(data) {
-      const ctx = document.getElementById('browserStatsChart').getContext('2d');
+      const ctx = document.getElementById('browserStatsChart').getContext('2d')
       
       const labels = data.map(item => item.browserOS);
-      const percentages = data.map(item => parseFloat(item.percentage));
+      const percentages = data.map(item => parseFloat(item.percentage))
 
       const chart = new Chart(ctx, {
         type: 'pie', 
@@ -64,7 +64,7 @@
             }
           }
         }
-      });
+      })
     }
 
-    fetchStats().then(renderChart);
+    fetchStats().then(renderChart)
