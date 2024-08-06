@@ -31,7 +31,7 @@ function renderChart(data) {
     data: {
       labels: labels,
       datasets: [{
-        label: 'Devices Scanned',
+        label: '%',
         data: percentages,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -60,7 +60,7 @@ function renderChart(data) {
         },
         title: {
           display: true,
-          text: '%'
+          text: 'OSes'
         }
       }
     }
