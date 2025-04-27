@@ -1,0 +1,235 @@
+/* Custom styles for Johnny Xmas site */
+
+/* General Body Styles */
+body {
+    animation: flicker 10s infinite;
+    font-size: 225% !important; /* Increase all text size by 125% */
+}
+
+body:after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 255, 0, 0.025) 50%);
+    background-size: 100% 4px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, p, a, span, .panel-title, .profile-title, .profile-description {
+    font-size: inherit !important; /* Ensure they inherit the body font size */
+}
+
+/* Terminal Header */
+.terminal-header {
+    background-color: #111;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.terminal-toolbar {
+    background-color: #222;
+    padding: 8px 15px;
+    border-bottom: 1px solid #00ff00;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.terminal-title, .terminal-command {
+    color: #00ff00;
+    font-family: 'VT323', monospace;
+}
+
+.terminal-title {
+    font-size: 16px;
+}
+
+.terminal-command {
+    font-size: 18px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #00ff00;
+}
+
+.terminal-prompt {
+    color: #00b300;
+    font-family: 'VT323', monospace;
+    margin-right: 5px;
+}
+
+/* Profile Section */
+.profile-picture {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    object-fit: contain;
+    border: 2px solid #00ff00;
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.profile-title {
+    font-size: 5rem !important;
+    font-weight: 700;
+    color: #00ff00;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    font-family: 'VT323', monospace;
+    letter-spacing: 2px;
+}
+
+.profile-description {
+    font-size: 2.4rem !important;
+    font-weight: 500;
+    color: #00b300;
+    margin-bottom: 30px;
+    font-family: 'VT323', monospace;
+    letter-spacing: 1px;
+}
+
+/* Panels */
+.panel {
+    margin-top: 20px;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+    position: relative;
+}
+
+.panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 255, 0, 0.05), rgba(0, 255, 0, 0));
+    pointer-events: none;
+    z-index: 1;
+}
+
+.panel-heading {
+    background-color: #111 !important;
+    border-bottom: 1px solid #00ff00;
+}
+
+.panel-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00ff00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+    font-family: 'VT323', monospace;
+    letter-spacing: 1px;
+}
+
+/* List Group */
+.list-group-item {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.list-group-item:hover {
+    border-left: 3px solid #00ff00;
+    padding-left: 20px;
+}
+
+.list-group-item:before {
+    content: "> ";
+    color: #00ff00;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.list-group-item:hover:before {
+    opacity: 1;
+}
+
+/* Footer */
+footer.text-center {
+    margin: 30px 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Glyphicon Colors */
+.glyphicon {
+    color: #00ff00;
+}
+
+a:hover .glyphicon {
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00b300;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #00ff00;
+}
+
+/* Terminal Cursor */
+.terminal-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 18px;
+    background-color: #00ff00;
+    margin-left: 5px;
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+
+/* Animations */
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes flicker {
+    0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90%, 100% { opacity: 0.97; }
+    5%, 25%, 45%, 65%, 85% { opacity: 0.95; }
+    15%, 35%, 55%, 75%, 95% { opacity: 0.94; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-title {
+        font-size: 3.6rem !important;
+    }
+    
+    .profile-description {
+        font-size: 2rem !important;
+    }
+    
+    .panel-title {
+        font-size: 1.3rem;
+    }
+    
+    .profile-picture {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+/* Text Center Section */
+.text-center {
+    margin-top: 40px;
+}
