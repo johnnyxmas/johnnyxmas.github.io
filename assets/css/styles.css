@@ -63,15 +63,77 @@ h1, h2, h3, h4, h5, h6, p, a, span, .panel-title, .profile-title, .profile-descr
     margin-right: 5px;
 }
 
-/* Profile Section */
-.profile-picture {
-    width: 240px;
-    height: 240px;
-    border-radius: 50%;
+/* TV Setup */
+.tv-setup {
+    position: relative;
+    width: 30vw; /* 30% of viewport width */
+    margin: 0 auto 15px;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#youtube-player {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 95%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.tv-link {
+    display: block;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.tv-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
     object-fit: contain;
-    border: 2px solid #00ff00;
-    margin-bottom: 15px;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    z-index: 2;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin: 0 auto;
+}
+
+.tv-link:hover .tv-image {
+    transform: scale(1.05);
+}
+
+.mute-button {
+    position: absolute;
+    bottom: 15%;
+    right: 15%;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #00ff00;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00ff00;
+    cursor: pointer;
+    z-index: 3;
+    padding: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.mute-button:hover {
+    background: rgba(0, 255, 0, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+}
+
+.mute-button:focus {
+    outline: none;
 }
 
 .profile-title {
@@ -223,13 +285,22 @@ a:hover .glyphicon {
         font-size: 1.3rem;
     }
     
-    .profile-picture {
-        width: 180px;
-        height: 180px;
+    .tv-setup {
+        width: 60vw; /* Larger on mobile */
+    }
+    
+    .mute-button {
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
     }
 }
 
 /* Text Center Section */
 .text-center {
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
