@@ -37,7 +37,7 @@
                     <div class="tv-setup">
                         <div class="video-container">
                             <!-- Added preload attribute and aria-label for accessibility -->
-                            <video id="main-video" autoplay muted loop playsinline preload="auto" aria-label="Johnny Xmas video">
+                            <video id="main-video" autoplay loop playsinline preload="auto" aria-label="Johnny Xmas video">
                                 <source src="assets/vid/jtv.mp4" type="video/mp4">
                                 <!-- Enhanced fallback message -->
                                 <p>Your browser doesn't support HTML5 video. <a href="assets/vid/jtv.mp4">Download the video</a> instead.</p>
@@ -52,6 +52,7 @@
                         <button id="mute-toggle" class="mute-button" title="Toggle audio" aria-label="Toggle audio" aria-pressed="false">
                             <i class="fas fa-volume-up"></i>
                         </button>
+                        <div class="sound-hint">click speaker for sound</div>
                     </div>
                     <h1 class="profile-title">@johnnyxmas</h1>
                     <p class="profile-description">Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con<span class="terminal-cursor"></span></p>
@@ -178,5 +179,81 @@
     <!-- jQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JavaScript for video controls -->
+    <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the video and mute button elements
+            const video = document.getElementById('main-video');
+            const muteToggle = document.getElementById('mute-toggle');
+            const muteIcon = muteToggle.querySelector('i');
+            
+            console.log('Initial video muted state:', video.muted);
+            
+            // Ensure video is muted initially (for autoplay)
+            video.muted = true;
+            
+            // Add click event to the video to ensure user interaction
+            video.addEventListener('click', function() {
+                console.log('Video clicked');
+                // This click helps with autoplay restrictions
+                video.play().catch(e => console.error('Error playing video:', e));
+            });
+            
+            // Add click event listener to mute button
+            muteToggle.addEventListener('click', function(e) {
+                console.log('Mute button clicked');
+                
+                // Prevent default behavior
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Toggle mute state
+                video.muted = !video.muted;
+                
+                console.log('New muted state:', video.muted);
+                
+                // Set volume to max when unmuted
+                if (!video.muted) {
+                    video.volume = 1.0;
+                    console.log('Volume set to:', video.volume);
+                }
+                
+                // Update button icon
+                updateMuteButtonState();
+                
+                // Ensure video is playing
+                if (video.paused) {
+                    video.play().catch(e => console.error('Error playing video:', e));
+                }
+            });
+            
+            // Function to update mute button state
+            function updateMuteButtonState() {
+                if (video.muted) {
+                    muteIcon.className = 'fas fa-volume-up';
+                    muteToggle.setAttribute('aria-pressed', 'true');
+                } else {
+                    muteIcon.className = 'fas fa-volume-mute';
+                    muteToggle.setAttribute('aria-pressed', 'false');
+                }
+            }
+            
+            // Set initial button state
+            updateMuteButtonState();
+            
+            // Log when video is ready to play
+            video.addEventListener('canplay', function() {
+                console.log('Video can play');
+                console.log('Video duration:', video.duration);
+                console.log('Has audio tracks:',
+                    video.mozHasAudio ||
+                    Boolean(video.webkitAudioDecodedByteCount) ||
+                    Boolean(video.audioTracks && video.audioTracks.length)
+                );
+            });
+        });
+    </script>
 </body>
 </html>

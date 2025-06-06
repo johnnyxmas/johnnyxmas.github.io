@@ -119,6 +119,20 @@ h1, h2, h3, h4, h5, h6, p, a, span, .panel-title, .profile-title, .profile-descr
     border-radius: 4px;
 }
 
+/* Sound Hint */
+.sound-hint {
+    position: absolute;
+    bottom: -25px;
+    right: 5%;
+    font-size: 1.2rem;
+    color: #00ff00;
+    text-shadow: 0 0 3px rgba(0, 255, 0, 0.5);
+    opacity: 0.8;
+    font-family: 'VT323', monospace;
+    z-index: 10;
+    pointer-events: none;
+}
+
 /* Loading Indicator - Hidden */
 .loading-indicator {
     display: none;
