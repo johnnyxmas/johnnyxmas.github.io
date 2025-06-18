@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, .panel-title, .profile-title, .profile-descr
 /* TV Setup */
 .tv-setup {
     position: relative;
-    width: 30vw; /* 30% of viewport width */
+    width: 22.5vw; /* 25% smaller than original 30vw */
     margin: 0 auto 15px;
     transition: transform 0.3s ease;
     cursor: pointer;
@@ -344,7 +344,7 @@ a:hover .glyphicon {
     }
     
     .tv-setup {
-        width: 60vw; /* Larger on mobile */
+        width: 45vw; /* 25% smaller than original 60vw (60 * 0.75 = 45) */
     }
     
     .mute-button {
