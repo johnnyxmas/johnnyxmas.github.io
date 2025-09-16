@@ -54,7 +54,7 @@
   }
 
   const contactLinks = [
-    { href: "https://outlook.office365.com/owa/calendar/MeetwithJohnnyXmas@Heinz365.onmicrosoft.com/bookings/", icon: "glyphicon-calendar", text: "Book a meeting with me" },
+    { href: "https://outlook.office.com/book/MeetwithJohnnyXmas1@kraftheinz.com/?ismsaljsauthenabled", icon: "glyphicon-calendar", text: "Meet with Me" },
     { href: "https://signal.group/#CjQKIGgT30VMU-FHAPM2TOqRKheN0mmwdQVSCC223V_aBM7xEhBWua03Mj5NxlAoG7AhYGxO", icon: "glyphicon-comment", text: "Signal" },
     { href: "https://t.me/j0hnnyxm4s", icon: "glyphicon-send", text: "Telegram" },
     { href: "https://keybase.io/j0hnnyxm4s", icon: "glyphicon-lock", text: "PGP Key" }
