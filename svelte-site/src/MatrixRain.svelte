@@ -34,7 +34,15 @@
     // Trail effect array to store character brightness
     const trails = new Array(columns).fill(null).map(() => []);
     
-    function draw() {
+    const frameInterval = 1000 / 30; // ~30fps (half of ~60fps)
+    let lastFrameTime = 0;
+
+    function draw(timestamp) {
+      if (timestamp - lastFrameTime < frameInterval) {
+        animationId = requestAnimationFrame(draw);
+        return;
+      }
+      lastFrameTime = timestamp;
       // Much stronger black background for maximum contrast
       ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
