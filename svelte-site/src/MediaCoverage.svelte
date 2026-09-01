@@ -67,6 +67,9 @@
     ] },
     { name: 'Authority Magazine', outlet: '"The 5 Things Every American Business Leader Should Do To Shield Themselves From A Cyberattack"', links: [
       'https://medium.com/authority-magazine/cyber-defense-antonio-johnny-martinelli-of-grimm-on-the-5-things-every-american-business-leader-c33742d0da89'
+    ] },
+    { name: 'Cecilia Limonta', outlet: 'ISMG / BankInfoSecurity', note: '"Offensive Security in Manufacturing: Are You Red Team Ready?" — on pentesting in OT environments, ahead of the 2025 ManuSec Summit.', links: [
+      'https://www.bankinfosecurity.com/offensive-security-in-manufacturing-are-you-red-team-ready-a-29555'
     ] }
   ];
 
