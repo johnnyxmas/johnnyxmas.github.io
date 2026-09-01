@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && cp dist/index.html dist/404.html",
+    "sitemap": "node scripts/generate-sitemap.js",
+    "deploy": "npm run build && npm run sitemap && cp dist/index.html dist/404.html",
     "sync": "npm run deploy && find ../assets -maxdepth 1 \\( -name '*.css' -o -name '*.js' \\) -delete && rm -rf ../media-coverage && find dist -name .DS_Store -delete && cp -R dist/. .."
   },
   "devDependencies": {
