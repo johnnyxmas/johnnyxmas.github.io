@@ -178,6 +178,8 @@
     <p class="profile-description">Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con</p>
   </div>
 
+  <div class="win-grid">
+
   <section id="media-presentations" class="win">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
@@ -267,6 +269,8 @@
       </ul>
     </div>
   </section>
+
+  </div>
 
   <footer class="desk-footer">
     <span class="shutdown">Special &#9654; Shut Down</span>

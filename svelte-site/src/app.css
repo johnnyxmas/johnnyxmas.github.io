@@ -114,24 +114,27 @@ body {
   max-width: 700px;
   margin: 0 auto;
   padding: calc(var(--menubar-h) + 44px) 20px 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 26px;
 }
 
-/* The movie, nameplate, and footer stay full-width even when the
-   windows below them split into two columns. */
-.movie, .nameplate, .desk-footer {
-  grid-column: 1 / -1;
-}
-.movie { justify-self: center; }
-
 @media (min-width: 760px) {
-  .desktop {
-    max-width: 960px;
-    grid-template-columns: 1fr 1fr;
-  }
+  .desktop { max-width: 1100px; }
+}
+
+/* The link-list windows pack into as many columns as fit, each
+   window sized to its own content — a masonry flow rather than
+   rows locked to a column count. */
+.win-grid {
+  width: 100%;
+  columns: 320px;
+  column-gap: 26px;
+}
+.win-grid .win {
+  break-inside: avoid;
+  margin-bottom: 26px;
 }
 
 /* ------------------------------------------------------------
