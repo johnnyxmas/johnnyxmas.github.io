@@ -1,11 +1,32 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
   import './app.css';
+  import { readStoredTheme, applyTheme, storeTheme, nextTheme, themeIconFor, themeLabelFor } from './lib/theme.js';
 
   let video;
   let isMuted = $state(true);
   let clock = $state('');
   let clockTimer;
+
+  // 'system' follows the OS; 'light'/'dark' are explicit overrides.
+  let themePreference = $state('system');
+  let systemPrefersDark = $state(false);
+  let darkMediaQuery;
+  let handleDarkMediaChange;
+
+  let themeIcon = $derived(themeIconFor(themePreference));
+  let themeLabel = $derived(themeLabelFor(themePreference, systemPrefersDark));
+  let themeColor = $derived(
+    (themePreference === 'dark' || (themePreference === 'system' && systemPrefersDark))
+      ? '#23252B'
+      : '#ffffff'
+  );
+
+  function cycleTheme() {
+    themePreference = nextTheme(themePreference);
+    storeTheme(themePreference);
+    applyTheme(themePreference);
+  }
 
   function tick() {
     clock = new Date()
@@ -19,10 +40,21 @@
     }
     tick();
     clockTimer = setInterval(tick, 15000);
+
+    themePreference = readStoredTheme();
+    applyTheme(themePreference);
+
+    darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    systemPrefersDark = darkMediaQuery.matches;
+    handleDarkMediaChange = (e) => { systemPrefersDark = e.matches; };
+    darkMediaQuery.addEventListener('change', handleDarkMediaChange);
   });
 
   onDestroy(() => {
     if (clockTimer) clearInterval(clockTimer);
+    if (darkMediaQuery && handleDarkMediaChange) {
+      darkMediaQuery.removeEventListener('change', handleDarkMediaChange);
+    }
   });
 
   function handleVideoClick() {
@@ -89,28 +121,14 @@
   ];
 </script>
 
+<!-- Title, description, canonical, OG/Twitter, favicons and JSON-LD live in
+     index.html so they're in the served HTML — this app renders client-side,
+     and social scrapers don't run JS. Anything static belongs there, not
+     here; only genuinely dynamic tags stay in <svelte:head>. -->
 <svelte:head>
-  <title>Johnny Xmas | Hacker</title>
-  <meta name="description" content="Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con">
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://johnnyxmas.net/">
-  <meta property="og:title" content="Johnny Xmas | Hacker">
-  <meta property="og:description" content="Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con">
-  <meta property="og:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@J0hnnyXm4s">
-  <meta name="twitter:title" content="Johnny Xmas | Hacker">
-  <meta name="twitter:description" content="Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con">
-  <meta name="twitter:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg">
-
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content={themeColor}>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,6 +148,15 @@
   {#each menus as menu}
     <a class="menubar-item" href={menu.href}>{menu.text}</a>
   {/each}
+  <button
+    type="button"
+    class="menubar-theme"
+    title={themeLabel}
+    aria-label={`${themeLabel}. Click to change.`}
+    onclick={cycleTheme}
+  >
+    <i class={themeIcon} aria-hidden="true"></i>
+  </button>
   <span class="menubar-clock">{clock}</span>
 </nav>
 

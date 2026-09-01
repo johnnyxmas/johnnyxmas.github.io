@@ -1,9 +1,29 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
   import './app.css';
+  import { readStoredTheme, applyTheme, storeTheme, nextTheme, themeIconFor, themeLabelFor } from './lib/theme.js';
 
   let clock = $state('');
   let clockTimer;
+
+  let themePreference = $state('system');
+  let systemPrefersDark = $state(false);
+  let darkMediaQuery;
+  let handleDarkMediaChange;
+
+  let themeIcon = $derived(themeIconFor(themePreference));
+  let themeLabel = $derived(themeLabelFor(themePreference, systemPrefersDark));
+  let themeColor = $derived(
+    (themePreference === 'dark' || (themePreference === 'system' && systemPrefersDark))
+      ? '#23252B'
+      : '#ffffff'
+  );
+
+  function cycleTheme() {
+    themePreference = nextTheme(themePreference);
+    storeTheme(themePreference);
+    applyTheme(themePreference);
+  }
 
   function tick() {
     clock = new Date()
@@ -14,138 +34,203 @@
   onMount(() => {
     tick();
     clockTimer = setInterval(tick, 15000);
+
+    themePreference = readStoredTheme();
+    applyTheme(themePreference);
+
+    darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    systemPrefersDark = darkMediaQuery.matches;
+    handleDarkMediaChange = (e) => { systemPrefersDark = e.matches; };
+    darkMediaQuery.addEventListener('change', handleDarkMediaChange);
   });
 
   onDestroy(() => {
     if (clockTimer) clearInterval(clockTimer);
+    if (darkMediaQuery && handleDarkMediaChange) {
+      darkMediaQuery.removeEventListener('change', handleDarkMediaChange);
+    }
   });
 
+  // Every item carries an ISO date ('YYYY-MM-DD', or 'YYYY-MM' where only
+  // the month is verifiable) so each section can be sorted newest-first and
+  // the date can be shown. Items without a verified date sort last.
   const directInterviews = [
-    { name: 'Zack Whittaker', outlet: 'ZDNet, TechCrunch', links: [
+    { date: '2025-09-25', name: 'Cecilia Limonta', outlet: 'ISMG / BankInfoSecurity', note: '"Offensive Security in Manufacturing: Are You Red Team Ready?" — on pentesting in OT environments, ahead of the 2025 ManuSec Summit.', links: [
+      'https://www.bankinfosecurity.com/offensive-security-in-manufacturing-are-you-red-team-ready-a-29555'
+    ] },
+    { date: '2021-09-20', name: 'Tor Constantino', outlet: 'Entrepreneur.com', links: [
+      'https://www.entrepreneur.com/science-technology/5-ransomware-protection-tips-for-your-small-business/384324'
+    ] },
+    { date: '2019-02-05', name: 'Zack Whittaker', outlet: 'ZDNet, TechCrunch', links: [
       'https://www.zdnet.com/article/chilling-effect-lawsuits-threaten-security-research-need-it-most/',
       'https://techcrunch.com/2019/02/05/kasada-bots/'
     ] },
-    { name: 'Steve Ragan', outlet: 'CSO', links: [
-      'http://www.csoonline.com/article/3097613/security/hackers-create-safe-skies-tsa-master-key-from-scratch-release-designs.html',
-      'http://www.csoonline.com/article/3099123/physical-security/rehashed-lessons-learned-from-the-safe-skies-tsa-master-key-leak.html'
-    ] },
-    { name: 'Charlie Osborne', outlet: 'ZDNet / Zero Day', links: [
-      'http://www.zdnet.com/article/tsa-safe-sky-master-key-blueprints-released-by-hacking-group/'
-    ] },
-    { name: 'Joe Uchill', outlet: 'The Hill', links: [
-      'http://thehill.com/business-a-lobbying/289178-hackers-thwart-tsa-luggage-locks-see-same-problems-in-backdoors'
-    ] },
-    { name: 'Bradley Barth', outlet: 'SC Magazine', links: [
-      'http://www.scmagazine.com/tsa-master-key-hackers-expose-dangers-of-physical-and-digital-key-escrow-policies/article/511685/'
-    ] },
-    { name: 'Alec', outlet: '3ders.org', links: [
-      'http://www.3ders.org/articles/20160725-hackers-create-3d-printed-tsa-safe-skies-master-key-for-luggage-release-blueprints.html'
-    ] },
-    { name: 'Tom Brant', outlet: 'PC Mag', links: [
-      'http://www.pcmag.com/news/346422/master-key-for-tsa-approved-locks-leaked-again'
-    ] },
-    { name: 'Mariella Moon', outlet: 'Engadget', links: [
-      'https://www.engadget.com/2016/07/28/tsa-master-key-3d-models/'
-    ] },
-    { name: 'John Biggs', outlet: 'TechCrunch', links: [
+    { date: '2016-07-29', name: 'John Biggs', outlet: 'TechCrunch', links: [
       'https://techcrunch.com/2016/07/29/tsa-key-cracker-johnny-xmas-tells-us-how-to-stay-safe-while-traveling/'
     ] },
-    { name: 'Michael Molitch-Hou', outlet: 'Engineering.com', links: [
-      'http://www.engineering.com/3DPrinting/3DPrintingArticles/ArticleID/12795/Hacking-the-TSAs-Master-Keys-3D-Printing-Adds-a-New-Dimension-to-Privacy-and-Security.aspx'
+    { date: '2016-07-29', name: 'Fox 5 NY', outlet: 'Video', note: 'Direct interview, but cut out everything I stated that contradicted the Senator.', links: [
+      'https://www.fox5ny.com/news/hackers-replicate-tsa-master-suitcase-lock-keys'
     ] },
-    { name: 'Catalin Cimpanu', outlet: 'Softpedia', links: [
-      'http://news.softpedia.com/news/another-set-of-tsa-master-keys-published-online-506657.shtml'
+    { date: '2016-07-29', name: 'Michael Molitch-Hou', outlet: 'Engineering.com', links: [
+      'https://www.engineering.com/hacking-the-tsas-master-keys-3d-printing-adds-a-new-dimension-to-privacy-and-security/'
     ] },
-    { name: 'Nico Jurran', outlet: 'Heise Online', links: [
-      'http://www.heise.de/newsticker/meldung/Generalschluessel-fuer-Gepaeck-Weiterer-TSA-Master-Key-veroeffentlicht-3277250.html'
+    { date: '2016-07-28', name: 'Mariella Moon', outlet: 'Engadget', links: [
+      'https://www.engadget.com/2016-07-28-tsa-master-key-3d-models.html'
     ] },
-    { name: 'Fox 5 NY', outlet: 'Video', note: 'Direct interview, but cut out everything I stated that contradicted the Senator.', links: [
-      'http://www.fox5ny.com/news/182871020-story'
+    { date: '2016-07-26', name: 'Catalin Cimpanu', outlet: 'Softpedia', links: [
+      'https://news.softpedia.com/news/another-set-of-tsa-master-keys-published-online-506657.shtml'
     ] },
-    { name: 'Tor Constantino', outlet: 'Entrepreneur.com', links: [
-      'https://www.entrepreneur.com/article/384324'
+    { date: '2016-07-25', name: 'Charlie Osborne', outlet: 'ZDNet / Zero Day', links: [
+      'https://www.zdnet.com/article/tsa-safe-sky-master-key-blueprints-released-by-hacking-group/'
+    ] },
+    { date: '2016-07-25', name: 'Alec', outlet: '3ders.org', links: [
+      'https://www.3ders.org/articles/20160725-hackers-create-3d-printed-tsa-safe-skies-master-key-for-luggage-release-blueprints.html'
+    ] },
+    { date: '2016-07-25', name: 'Tom Brant', outlet: 'PC Mag', links: [
+      'https://www.pcmag.com/news/master-key-for-tsa-approved-locks-leaked-again'
+    ] },
+    { date: '2016-07-24', name: 'Steve Ragan', outlet: 'CSO', links: [
+      'https://www.csoonline.com/article/557099/hackers-create-safe-skies-tsa-master-key-from-scratch-release-designs.html',
+      'https://www.csoonline.com/article/557141/rehashed-lessons-learned-from-the-safe-skies-tsa-master-key-leak.html'
+    ] },
+    { date: '2016-07-24', name: 'Nico Jurran', outlet: 'Heise Online', links: [
+      'https://www.heise.de/news/Generalschluessel-fuer-Gepaeck-Weiterer-TSA-Master-Key-veroeffentlicht-3277250.html'
+    ] },
+    { date: '2016-07', name: 'Joe Uchill', outlet: 'The Hill', links: [
+      'https://thehill.com/business-a-lobbying/289178-hackers-thwart-tsa-luggage-locks-see-same-problems-in-backdoors/'
+    ] },
+    { date: '2016-07', name: 'Bradley Barth', outlet: 'SC Magazine', links: [
+      'https://www.scworld.com/news/tsa-master-key-hackers-expose-dangers-of-physical-and-digital-key-escrow-policies'
     ] },
     { name: 'Authority Magazine', outlet: '"The 5 Things Every American Business Leader Should Do To Shield Themselves From A Cyberattack"', links: [
       'https://medium.com/authority-magazine/cyber-defense-antonio-johnny-martinelli-of-grimm-on-the-5-things-every-american-business-leader-c33742d0da89'
-    ] },
-    { name: 'Cecilia Limonta', outlet: 'ISMG / BankInfoSecurity', note: '"Offensive Security in Manufacturing: Are You Red Team Ready?" — on pentesting in OT environments, ahead of the 2025 ManuSec Summit.', links: [
-      'https://www.bankinfosecurity.com/offensive-security-in-manufacturing-are-you-red-team-ready-a-29555'
     ] }
   ];
 
+  // Linked to each show's own episode page rather than to a reupload
+  // wherever one exists.
   const podcasts = [
-    { name: 'Security Weekly', links: ['https://www.youtube.com/watch?v=5ER57r6Y0uI'] },
-    { name: 'Exploring Information Security', outlet: 'Social Skills', links: [
-      'https://www.everand.com/podcast/418776359/Why-social-skills-are-important-part-1-Johnny-Xmas-joins-me-to-discuss-why-social-skills-are-important'
+    { date: '2024-12-29', name: 'Hacker Talk', outlet: 'New Year Special 2024', links: [
+      'https://creators.spotify.com/pod/show/hacker-talk/episodes/New-Year-special-2024-e2srurq'
     ] },
-    { name: 'InfoQ', outlet: 'Web Security and the Anatomy of a Hack', links: [
-      'https://www.infoq.com/podcasts/web-security-hack-anatomy/'
+    { date: '2024-12-18', name: 'Hacker History', outlet: 'The History of Johnny Xmas', links: [
+      'https://hackerhistory.com/podcast/the-history-of-johnny-xmas/'
     ] },
-    { name: 'Security Headlines', links: [
-      'https://blog.firosolutions.com/2020/10/security_headlines_with_johnny_xmas/'
-    ] },
-    { name: 'Hamilton Barnes', outlet: 'The Route to Networking', links: [
+    { date: '2023-07-13', name: 'The Route to Networking', outlet: 'E24: Johnny Xmas at GRIMM', links: [
       'https://www.hamilton-barnes.com/resources/podcast/e24---johnny-xmas-at-grimm/'
     ] },
-    { name: 'Marine Cyber', outlet: 'The Innocent Bystander Risk', links: [
+    { date: '2022-05-09', name: 'The Maritime Risk Podcast', outlet: 'Episode 12: Marine Cyber — The Innocent Bystander Risk', links: [
       'https://maritimerisk.podbean.com/e/episode-12-marine-cyber-the-innocent-bystander-risk/'
+    ] },
+    { date: '2020-10', name: 'Security Headlines', outlet: 'Growing Up as a Hacker, Venmo Stalking, and WAF Bypasses', links: [
+      'https://blog.firosolutions.com/2020/10/security_headlines_with_johnny_xmas/'
+    ] },
+    { date: '2019-09-15', name: 'Unnamed Reverse Engineering', outlet: 'Ep 028: Everyone Has a Bag of Tricks', note: 'Recorded at CCCamp19.', links: [
+      'https://unnamedre.com/episode/28'
+    ] },
+    { date: '2019-08-19', name: 'Sysadministrivia', outlet: 'S4E13: Xmas in July', links: [
+      'https://sysadministrivia.com/episodes/S4E13'
+    ] },
+    { date: '2019-06-17', name: 'The InfoQ Podcast', outlet: 'Web Security and the Anatomy of a Hack', links: [
+      'https://www.infoq.com/podcasts/web-security-hack-anatomy/'
+    ] },
+    { date: '2018-10-30', name: 'Application Security Weekly', outlet: 'Episode 37, with Kasada.io', links: [
+      'https://www.scworld.com/podcast-segment/4556-johnny-xmas-kasada-io'
+    ] },
+    { date: '2018-09-10', name: 'Sysadministrivia', outlet: 'S3E14: HOPEless', links: [
+      'https://sysadministrivia.com/episodes/S3E14'
+    ] },
+    { date: '2018-01-22', name: 'Sysadministrivia', outlet: 'S2E22: Shitshow III — Son of Shitshow', links: [
+      'https://sysadministrivia.com/episodes/S2E22'
+    ] },
+    { date: '2017-10-23', name: 'Sysadministrivia', outlet: 'S2E18: Dueling Banditos', links: [
+      'https://sysadministrivia.com/episodes/S2E18'
+    ] },
+    { date: '2017-07-02', name: 'Exploring Information Security', outlet: 'The state of the infosec community, with Jayson E. Street, Dave Chronister and April Wright', links: [
+      'https://www.exploresec.com/eis/93'
+    ] },
+    { date: '2017-05-28', name: 'Exploring Information Security', outlet: 'Why social skills are important, parts 1 and 2', links: [
+      'https://www.exploresec.com/eis/88',
+      'https://www.exploresec.com/eis/89'
+    ] },
+    { date: '2016-08-29', name: 'Sysadministrivia', outlet: 'S1E14: The HOPE Campaign, with Deviant Ollam', links: [
+      'https://sysadministrivia.com/episodes/S1E14'
+    ] },
+    { date: '2016-03-13', name: 'Exploring Information Security', outlet: 'How to start a successful CitySec meetup, parts 1 and 2', links: [
+      'https://www.exploresec.com/eis/35',
+      'https://www.exploresec.com/eis/36'
     ] }
   ];
 
   const indirectCoverage = [
-    { name: 'TechCrunch', outlet: 'Venmo Scraping', links: [
-      'https://techcrunch.com/2019/06/16/millions-venmo-transactions-scraped/'
-    ] },
-    { name: 'Dice.com', outlet: 'CTF Article', links: [
-      'https://insights.dice.com/employer-resource-center/hack-to-the-future-how-dice-is-disrupting-the-disruptors/'
-    ] },
-    { name: 'Daily Mail', links: [
-      'http://www.dailymail.co.uk/news/article-3705993/Hackers-create-3D-printable-master-key-major-line-TSA-approved-luggage-locks.html'
-    ] },
-    { name: 'Tara Seals', outlet: 'Infosecurity Magazine', note: 'An evident rewrite of the Vice piece below.', links: [
-      'http://www.infosecurity-magazine.com/news/hackers-replicate-tsa-master/'
-    ] },
-    { name: 'Katie Armstrong', outlet: '3D Printing Industry', links: [
-      'http://3dprintingindustry.com/news/last-tsa-master-key-hacked-90268/'
-    ] },
-    { name: 'Alfred Bayle', outlet: 'Inquirer.net', links: [
-      'http://technology.inquirer.net/50263/seven-master-keys-of-tsa-cloned-by-security-experts'
-    ] },
-    { name: 'Security.nl', links: [
-      'https://www.security.nl/posting/479047/Hackers+publiceren+TSA-loper+voor+openen+van+koffers?channel=rss'
-    ] },
-    { name: 'Tess Owen', outlet: 'Vice', links: [
-      'https://news.vice.com/article/hackers-published-replicas-and-blueprints-to-tsa-master-luggage-keys'
-    ] },
-    { name: 'John Biggs', outlet: 'TechCrunch', links: [
-      'https://techcrunch.com/2016/07/27/security-experts-have-cloned-all-seven-tsa-master-keys/'
-    ] },
-    { name: 'Adnan Farooqui', outlet: 'Ubergizmo', links: [
-      'http://www.ubergizmo.com/2016/07/3d-models-of-all-tsa-master-keys-now-available-online/'
-    ] },
-    { name: 'BleepingComputer', outlet: 'Malware Infiltrates Pidgin Messenger’s Official Plugin Repository', note: 'Credited with confirming the keylogger hidden in the ss-otr plugin.', links: [
+    { date: '2024-08-27', name: 'BleepingComputer', outlet: 'Malware Infiltrates Pidgin Messenger\u2019s Official Plugin Repository', note: 'Credited with confirming the keylogger hidden in the ss-otr plugin.', links: [
       'https://www.bleepingcomputer.com/news/security/malware-infiltrates-pidgin-messengers-official-plugin-repository/',
       'https://www.scworld.com/brief/darkgate-malware-spread-through-malicious-pidgin-plugin'
+    ] },
+    { date: '2019-06-16', name: 'TechCrunch', outlet: 'Venmo Scraping', links: [
+      'https://techcrunch.com/2019/06/16/millions-venmo-transactions-scraped/'
+    ] },
+    { date: '2018-10-02', name: 'Dice.com', outlet: 'CTF Article', links: [
+      'https://www.dice.com/hiring/recruitment/hack-to-the-future-how-dice-is-disrupting-the-disruptors'
+    ] },
+    { date: '2016-07-28', name: 'Adnan Farooqui', outlet: 'Ubergizmo', links: [
+      'https://www.ubergizmo.com/2016/07/3d-models-of-all-tsa-master-keys-now-available-online/'
+    ] },
+    { date: '2016-07-27', name: 'Clare Scott', outlet: '3DPrint.com', links: [
+      'https://3dprint.com/143860/tsa-master-keys-hacked-again/'
+    ] },
+    { date: '2016-07-27', name: 'Katie Armstrong', outlet: '3D Printing Industry', links: [
+      'https://3dprintingindustry.com/news/last-tsa-master-key-hacked-90268/'
+    ] },
+    { date: '2016-07-27', name: 'John Biggs', outlet: 'TechCrunch', links: [
+      'https://techcrunch.com/2016/07/27/security-experts-have-cloned-all-seven-tsa-master-keys/'
+    ] },
+    { date: '2016-07-26', name: 'Tara Seals', outlet: 'Infosecurity Magazine', note: 'An evident rewrite of the Vice piece below.', links: [
+      'https://www.infosecurity-magazine.com/news/hackers-replicate-tsa-master/'
+    ] },
+    { date: '2016-07-25', name: 'Tess Owen', outlet: 'Vice', links: [
+      'https://www.vice.com/en/article/hackers-published-replicas-and-blueprints-to-tsa-master-luggage-keys/'
+    ] },
+    { date: '2016-07-24', name: 'Daily Mail', links: [
+      'https://www.dailymail.co.uk/news/article-3705993/Hackers-create-3D-printable-master-key-major-line-TSA-approved-luggage-locks.html'
+    ] },
+    { date: '2016-07', name: 'Alfred Bayle', outlet: 'Inquirer.net', links: [
+      'https://technology.inquirer.net/50263/seven-master-keys-of-tsa-cloned-by-security-experts'
+    ] },
+    { date: '2016-07', name: 'Security.nl', links: [
+      'https://www.security.nl/posting/479047/Hackers+publiceren+TSA-loper+voor+openen+van+koffers?channel=rss'
     ] }
   ];
 
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December'];
+
+  // 'YYYY-MM-DD' -> 'September 25, 2025'; 'YYYY-MM' -> 'July 2016'.
+  function formatDate(iso) {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-');
+    const month = MONTHS[Number(m) - 1];
+    return d ? `${month} ${Number(d)}, ${y}` : `${month} ${y}`;
+  }
+
+  // Newest first; anything undated sorts to the bottom of its section.
+  function newestFirst(items) {
+    return [...items].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  }
+
   const sections = [
-    { id: 'direct-interviews', title: 'Direct Interviews', items: directInterviews },
-    { id: 'podcasts-web-shows', title: 'Podcasts & Web Shows', items: podcasts },
-    { id: 'indirect-coverage', title: 'Indirect Coverage', items: indirectCoverage }
+    { id: 'direct-interviews', title: 'Direct Interviews', items: newestFirst(directInterviews) },
+    { id: 'podcasts-web-shows', title: 'Podcasts & Web Shows', items: newestFirst(podcasts) },
+    { id: 'indirect-coverage', title: 'Indirect Coverage', items: newestFirst(indirectCoverage) }
   ];
 </script>
 
+<!-- Crawler-facing metadata (title, description, canonical, OG/Twitter,
+     favicons, JSON-LD) lives in media-coverage/index.html so it is present
+     in the served HTML — this page renders client-side, and social scrapers
+     don't run JS. Only genuinely dynamic tags belong here. -->
 <svelte:head>
-  <title>Media Coverage | Johnny Xmas</title>
-  <meta name="description" content="Press, interviews, and podcast appearances featuring Johnny Xmas.">
-  <meta name="robots" content="noindex">
-
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content={themeColor}>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -165,6 +250,15 @@
   {#each sections as section}
     <a class="menubar-item" href={`#${section.id}`}>{section.title}</a>
   {/each}
+  <button
+    type="button"
+    class="menubar-theme"
+    title={themeLabel}
+    aria-label={`${themeLabel}. Click to change.`}
+    onclick={cycleTheme}
+  >
+    <i class={themeIcon} aria-hidden="true"></i>
+  </button>
   <span class="menubar-clock">{clock}</span>
 </nav>
 
@@ -186,6 +280,9 @@
           <ul class="press-list">
             {#each section.items as item}
               <li class="press-item">
+                {#if item.date}
+                  <p class="press-date"><time datetime={item.date}>{formatDate(item.date)}</time></p>
+                {/if}
                 <div class="press-byline">
                   {item.name}{#if item.outlet}<span class="press-outlet"> — {item.outlet}</span>{/if}
                 </div>
@@ -213,3 +310,16 @@
   </footer>
 
 </main>
+
+<style>
+  /* Scoped here rather than in app.css: this is the only page with dated
+     entries, and the tokens it uses are already global. */
+  .press-date {
+    margin: 0 0 4px;
+    font-family: var(--pixel);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+</style>

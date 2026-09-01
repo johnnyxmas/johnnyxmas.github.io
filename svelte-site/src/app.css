@@ -1,13 +1,15 @@
 /* ============================================================
    johnnyxmas.net — System 6
-   A 1-bit Macintosh desktop. Committed single theme: the whole
-   design is black ink on white paper over a dithered desktop,
-   so there is no dark-mode variant. Every color is explicit.
+   A 1-bit Macintosh desktop, light by default. Dark mode is a
+   distinct palette (not a straight invert) that follows the OS
+   preference and can be overridden by the menu-bar toggle via
+   [data-theme] on <html>. Every color comes from a token below —
+   never hardcode ink/paper elsewhere in this file.
    ============================================================ */
 
 :root {
-  /* Ink and paper — the entire palette is two colors plus the
-     dither that sits between them. */
+  /* Ink and paper — the entire light palette is two colors plus
+     the dither that sits between them. */
   --ink:            #000000;
   --paper:          #FFFFFF;
   --ink-soft:       #444444;   /* secondary text on paper */
@@ -16,6 +18,8 @@
   --rule-soft:      #E4E4E4;
   --shadow:         rgba(0, 0, 0, 0.55);
   --desk-dot:       #6B6B6B;   /* desktop dither dot */
+  --desk-bg:        var(--paper);   /* desktop fill behind the dither */
+  --desk-image:     repeating-conic-gradient(var(--desk-dot) 0% 25%, var(--paper) 0% 50%);
 
   --chrome:         2px;       /* window border weight */
   --drop:           3px;       /* hard drop-shadow offset */
@@ -27,9 +31,50 @@
   color-scheme: light;
 }
 
+/* Dark palette — a charcoal window face rather than a straight
+   invert, and a flat desktop (the dither reads as noise once the
+   ground goes dark). Applies when the OS prefers dark and there's
+   no explicit override, ... */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink:            #E7E6E2;
+    --paper:          #23252B;
+    --ink-soft:       #B2B4BC;
+    --ink-faint:      #9A9CA3;
+    --rule:           #4A4D56;
+    --rule-soft:      #2E3038;
+    --shadow:         rgba(0, 0, 0, 0.55);
+    --desk-dot:       #1B1D22;
+    --desk-bg:        var(--desk-dot);
+    --desk-image:     none;
+
+    color-scheme: dark;
+  }
+}
+
+/* ... or when the toggle sets it explicitly, either direction. */
+:root[data-theme="dark"] {
+  --ink:            #E7E6E2;
+  --paper:          #23252B;
+  --ink-soft:       #B2B4BC;
+  --ink-faint:      #9A9CA3;
+  --rule:           #4A4D56;
+  --rule-soft:      #2E3038;
+  --shadow:         rgba(0, 0, 0, 0.55);
+  --desk-dot:       #1B1D22;
+  --desk-bg:        var(--desk-dot);
+  --desk-image:     none;
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 
-html { background: var(--paper); }
+html { background: var(--desk-bg); }
 
 body {
   margin: 0;
@@ -40,14 +85,16 @@ body {
   color: var(--ink);
 
   /* The System 6 desktop dither. Kept at 2px squares: a true 1px
-     checkerboard moires into a colour cast on scaled displays. */
-  background-color: var(--paper);
-  background-image: repeating-conic-gradient(var(--desk-dot) 0% 25%, var(--paper) 0% 50%);
+     checkerboard moires into a colour cast on scaled displays.
+     Dark mode drops the dither in favor of a flat fill (--desk-image: none). */
+  background-color: var(--desk-bg);
+  background-image: var(--desk-image);
   background-size: 4px 4px;
   background-attachment: fixed;
 
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 /* ------------------------------------------------------------
@@ -102,8 +149,27 @@ a.menubar-apple:focus-visible {
   outline: none;
 }
 
-.menubar-clock {
+.menubar-theme {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  padding: 0;
+  font-size: 12px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.menubar-theme:hover,
+.menubar-theme:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
+}
+
+.menubar-clock {
   display: flex;
   align-items: center;
   padding: 0 10px;
@@ -456,8 +522,8 @@ a.menubar-apple:focus-visible {
    ------------------------------------------------------------ */
 ::-webkit-scrollbar { width: 15px; }
 ::-webkit-scrollbar-track {
-  background-color: var(--paper);
-  background-image: repeating-conic-gradient(var(--desk-dot) 0% 25%, var(--paper) 0% 50%);
+  background-color: var(--desk-bg);
+  background-image: var(--desk-image);
   background-size: 4px 4px;
   border-left: var(--chrome) solid var(--ink);
 }
