@@ -2,12 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Crawler-facing metadata lives here, not in <svelte:head>: the app
+         renders client-side, and social scrapers (Slack, iMessage, X,
+         LinkedIn, Facebook) don't run JS, so anything Svelte injects on
+         mount is invisible to them. Keep this in sync with App.svelte. -->
     <title>Johnny Xmas | Hacker</title>
-    <script type="module" crossorigin src="/assets/main-CAILYfkU.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/chunk-DT5-VUTT.js">
-    <link rel="stylesheet" crossorigin href="/assets/style-B_rgF3xr.css">
+    <meta
+      name="description"
+      content="Johnny Xmas is a hacker and offensive security leader known for the TSA master key leaks and Venmo privacy research, as seen on Fox, NBC, Wired and TechCrunch."
+    />
+    <link rel="canonical" href="https://johnnyxmas.net/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Johnny Xmas" />
+    <meta property="og:url" content="https://johnnyxmas.net/" />
+    <meta property="og:title" content="Johnny Xmas | Hacker" />
+    <meta
+      property="og:description"
+      content="Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con."
+    />
+    <meta property="og:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
+    <meta property="og:image:alt" content="Johnny Xmas" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@J0hnnyXm4s" />
+    <meta name="twitter:creator" content="@J0hnnyXm4s" />
+    <meta name="twitter:title" content="Johnny Xmas | Hacker" />
+    <meta
+      name="twitter:description"
+      content="Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con."
+    />
+    <meta name="twitter:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Johnny Xmas",
+        "alternateName": "Antonio “Johnny” Martinelli",
+        "url": "https://johnnyxmas.net/",
+        "jobTitle": "Global Head of Offensive Security",
+        "description": "Hacker, speaker and offensive security leader, known for the TSA master key leaks and Venmo public-feed privacy research.",
+        "sameAs": [
+          "https://twitter.com/J0hnnyXm4s",
+          "https://www.linkedin.com/in/johnnyxmas/",
+          "https://infosec.exchange/@j0hnnyxm4s",
+          "https://bsky.app/profile/j0hnnyxm4s.bsky.social",
+          "https://www.youtube.com/johnnyxmas",
+          "https://github.com/johnnyxmas",
+          "https://keybase.io/j0hnnyxm4s"
+        ]
+      }
+    </script>
+    <script>
+      // Applied before paint so a stored dark/light override doesn't
+      // flash the system-default theme first.
+      try {
+        var stored = localStorage.getItem('theme-preference');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="/assets/main-cyNyEmxM.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/chunk-DQBxudCn.js">
+    <link rel="stylesheet" crossorigin href="/assets/style-BDhVJeul.css">
   </head>
   <body>
     <div id="app"></div>

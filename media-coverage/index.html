@@ -2,12 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Media Coverage | Johnny Xmas</title>
-    <script type="module" crossorigin src="/assets/mediaCoverage-DQyhSCft.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/chunk-DT5-VUTT.js">
-    <link rel="stylesheet" crossorigin href="/assets/style-B_rgF3xr.css">
+
+    <!-- Crawler-facing metadata lives here, not in <svelte:head>: the app
+         renders client-side, and social scrapers don't run JS. Keep this in
+         sync with MediaCoverage.svelte. -->
+    <title>Media Coverage — Press and Interviews | Johnny Xmas</title>
+    <meta
+      name="description"
+      content="Press, interviews and podcast appearances featuring hacker Johnny Xmas — from the TSA master key leaks and Venmo privacy research to offensive security in manufacturing."
+    />
+    <link rel="canonical" href="https://johnnyxmas.net/media-coverage/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Johnny Xmas" />
+    <meta property="og:url" content="https://johnnyxmas.net/media-coverage/" />
+    <meta property="og:title" content="Media Coverage — Press and Interviews | Johnny Xmas" />
+    <meta
+      property="og:description"
+      content="Press, interviews and podcast appearances featuring hacker Johnny Xmas."
+    />
+    <meta property="og:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
+    <meta property="og:image:alt" content="Johnny Xmas" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@J0hnnyXm4s" />
+    <meta name="twitter:creator" content="@J0hnnyXm4s" />
+    <meta name="twitter:title" content="Media Coverage — Press and Interviews | Johnny Xmas" />
+    <meta
+      name="twitter:description"
+      content="Press, interviews and podcast appearances featuring hacker Johnny Xmas."
+    />
+    <meta name="twitter:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Media Coverage — Johnny Xmas",
+        "url": "https://johnnyxmas.net/media-coverage/",
+        "description": "Press, interviews and podcast appearances featuring hacker Johnny Xmas.",
+        "about": {
+          "@type": "Person",
+          "name": "Johnny Xmas",
+          "url": "https://johnnyxmas.net/"
+        },
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Johnny Xmas",
+          "url": "https://johnnyxmas.net/"
+        }
+      }
+    </script>
+    <script>
+      // Applied before paint so a stored dark/light override doesn't
+      // flash the system-default theme first. Kept in sync with
+      // src/lib/theme.js — see the note there.
+      try {
+        var stored = localStorage.getItem('theme-preference');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="/assets/mediaCoverage-7-8K4Mst.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/chunk-DQBxudCn.js">
+    <link rel="stylesheet" crossorigin href="/assets/style-BDhVJeul.css">
+    <link rel="stylesheet" crossorigin href="/assets/style-C2QqqdPn.css">
   </head>
   <body>
     <div id="app"></div>
