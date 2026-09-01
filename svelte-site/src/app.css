@@ -1,422 +1,418 @@
+/* ============================================================
+   johnnyxmas.net — System 6
+   A 1-bit Macintosh desktop. Committed single theme: the whole
+   design is black ink on white paper over a dithered desktop,
+   so there is no dark-mode variant. Every color is explicit.
+   ============================================================ */
+
+:root {
+  /* Ink and paper — the entire palette is two colors plus the
+     dither that sits between them. */
+  --ink:            #000000;
+  --paper:          #FFFFFF;
+  --ink-soft:       #444444;   /* secondary text on paper */
+  --ink-faint:      #767676;   /* captions, footer */
+  --rule:           #C8C8C8;   /* hairline between list rows */
+  --rule-soft:      #E4E4E4;
+  --shadow:         rgba(0, 0, 0, 0.55);
+  --desk-dot:       #6B6B6B;   /* desktop dither dot */
+
+  --chrome:         2px;       /* window border weight */
+  --drop:           3px;       /* hard drop-shadow offset */
+  --menubar-h:      30px;
+
+  --pixel: "Silkscreen", "Courier New", monospace;
+  --sans:  "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--paper); }
+
 body {
-    background-color: #000000;
-    color: #0f0;
-    font-family: 'DM Sans', Monospace, sans-serif;
-    line-height: 1.42857143;
-    animation: flicker 10s infinite;
-    font-size: 225% !important;
-    position: relative;
-    min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+
+  /* The System 6 desktop dither. Kept at 2px squares: a true 1px
+     checkerboard moires into a colour cast on scaled displays. */
+  background-color: var(--paper);
+  background-image: repeating-conic-gradient(var(--desk-dot) 0% 25%, var(--paper) 0% 50%);
+  background-size: 4px 4px;
+  background-attachment: fixed;
+
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-html {
-    background-color: #000000;
+/* ------------------------------------------------------------
+   Menu bar — fixed, and the site's actual navigation.
+   ------------------------------------------------------------ */
+.menubar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--menubar-h);
+  z-index: 100;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding: 0 8px;
+  background: var(--paper);
+  border-bottom: var(--chrome) solid var(--ink);
 }
 
-body:after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 255, 0, 0.025) 50%);
-    background-size: 100% 4px;
-    z-index: 1000;
-    pointer-events: none;
-    opacity: 0.15;
+.menubar-apple {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  color: var(--ink);
+}
+.menubar-apple svg { display: block; }
+
+.menubar-item {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-family: var(--pixel);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.menubar-item:hover,
+.menubar-item:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
 }
 
-h1, h2, h3, h4, h5, h6, p, a, span, .panel-title, .profile-title, .profile-description {
-    font-size: inherit !important;
-    font-family: Monospace;
-    font-weight: 500;
-    line-height: 1.1;
-    color: inherit;
+.menubar-clock {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-family: var(--pixel);
+  font-size: 11px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-a {
-    color: #00b300;
-    text-decoration: none;
+/* ------------------------------------------------------------
+   Desktop layout
+   ------------------------------------------------------------ */
+.desktop {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: calc(var(--menubar-h) + 44px) 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
 }
 
-a:hover, a:focus {
-    color: #00ff00;
-    text-decoration: underline;
+/* ------------------------------------------------------------
+   Window chrome — title bar with the classic horizontal lines,
+   a close box at the left, and the title knocked out in white.
+   ------------------------------------------------------------ */
+.win {
+  width: 100%;
+  /* Clears the fixed menu bar when jumped to from it. */
+  scroll-margin-top: calc(var(--menubar-h) + 18px);
+  background: var(--paper);
+  border: var(--chrome) solid var(--ink);
+  box-shadow: var(--drop) var(--drop) 0 var(--shadow);
 }
 
-.list-group a,
-.list-group-item a {
-    color: #ffffff !important;
+.win-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-bottom: var(--chrome) solid var(--ink);
+  background-image: repeating-linear-gradient(
+    180deg,
+    var(--ink) 0 1px,
+    var(--paper) 1px 3px
+  );
 }
 
-.terminal-header {
-    background-color: rgba(17, 17, 17, 0.95);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border: 1.5px solid #00ff00;
-    border-radius: 5px;
-    margin: 20px 0;
-    box-shadow: 0 0 8px rgba(0, 255, 0, 0.35), 0 0 15px rgba(0, 255, 0, 0.25), 0 0 22px rgba(0, 255, 0, 0.15);
+.win-close {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  background: var(--paper);
+  border: var(--chrome) solid var(--ink);
 }
 
-.terminal-toolbar {
-    background-color: #222;
-    padding: 8px 15px;
-    border-bottom: 1px solid #00ff00;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+.win-title {
+  margin: 0 auto;
+  padding: 0 10px;
+  background: var(--paper);
+  font-family: var(--pixel);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-transform: uppercase;
+  line-height: 1.5;
 }
 
-.terminal-title, .terminal-command {
-    color: #00ff00;
-    font-family: 'VT323', monospace;
+/* Balances the close box so the title sits optically centered. */
+.win-bar::after {
+  content: "";
+  flex: none;
+  width: 13px;
 }
 
-.terminal-title {
-    font-size: 16px;
-}
+.win-body { padding: 0; }
 
-.terminal-command {
-    font-size: 18px;
-    padding: 10px 15px;
-    border-bottom: 1px solid #00ff00;
-}
+/* ------------------------------------------------------------
+   The movie window
+   ------------------------------------------------------------ */
+.movie { max-width: 340px; }
 
-.terminal-prompt {
-    color: #00b300;
-    font-family: 'VT323', monospace;
-    margin-right: 5px;
-}
-
-.tv-setup {
-    position: relative;
-    width: 22.5vw;
-    margin: 0 auto 15px;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-.tv-setup:hover {
-    transform: scale(1.05);
-}
-
-.video-container {
-    position: absolute;
-    top: 50%;
-    left: 40%;
-    width: 75%;
-    height: 75%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    overflow: hidden;
-    border-radius: 10px;
+.movie-screen {
+  display: block;
+  background: var(--ink);
+  line-height: 0;
 }
 
 #main-video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* Player controls, styled as a System 6 control strip. */
+.movie-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-top: var(--chrome) solid var(--ink);
+  background: var(--paper);
 }
 
 .mute-button {
-    position: absolute;
-    bottom: 15%;
-    right: 15%;
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid #00ff00;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #00ff00;
-    cursor: pointer;
-    z-index: 10;
-    padding: 0;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5), 0 5px 15px rgba(0, 255, 0, 0.3);
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-    border-radius: 4px;
+  flex: none;
+  width: 26px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 11px;
+  color: var(--ink);
+  background: var(--paper);
+  border: var(--chrome) solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: pointer;
 }
-
-.mute-button:hover {
-    background: rgba(0, 255, 0, 0.2);
-    transform: scale(1.1);
-    box-shadow: 0 0 8px rgba(0, 255, 0, 0.8), 0 8px 20px rgba(0, 255, 0, 0.4);
-    text-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
-}
-
-.mute-button:focus {
-    outline: none;
-}
+.mute-button:hover { background: var(--ink); color: var(--paper); }
+.mute-button:active { transform: translate(2px, 2px); box-shadow: none; }
 
 .sound-hint {
-    position: absolute;
-    bottom: -25px;
-    right: 5%;
-    font-size: 1.2rem;
-    color: #00ff00;
-    text-shadow: 0 0 3px rgba(0, 255, 0, 0.5);
-    opacity: 0.8;
-    font-family: 'VT323', monospace;
-    z-index: 10;
-    pointer-events: none;
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
 }
 
-.tv-overlay {
-    position: relative;
-    width: 100%;
-    height: auto;
-    display: block;
-    z-index: 2;
-    pointer-events: none;
-    filter: drop-shadow(0 8px 12px rgba(0, 255, 0, 0.5)) drop-shadow(0 0 8px rgba(0, 255, 0, 0.3));
+/* ------------------------------------------------------------
+   Name plate
+   ------------------------------------------------------------ */
+.nameplate {
+  width: 100%;
+  background: var(--paper);
+  border: var(--chrome) solid var(--ink);
+  box-shadow: var(--drop) var(--drop) 0 var(--shadow);
+  padding: 22px 24px;
+  text-align: center;
 }
 
 .profile-title {
-    font-size: 5rem !important;
-    font-weight: 700;
-    color: #00ff00;
-    margin-bottom: 10px;
-    font-family: 'VT323', monospace;
-    letter-spacing: 2px;
-    background-color: rgba(0, 0, 0, 0.9);
-    padding: 10px 20px;
-    border-radius: 5px;
-    display: inline-block;
-    border: 1px solid rgba(0, 255, 0, 0.3);
-    animation: glow-pulse 2s ease-in-out infinite;
-}
-
-@keyframes glow-pulse {
-    0%, 100% {
-        text-shadow: 0 0 8px rgba(0, 255, 0, 0.6), 0 0 15px rgba(0, 255, 0, 0.4), 0 0 20px rgba(0, 255, 0, 0.3);
-    }
-    50% {
-        text-shadow: 0 0 15px rgba(0, 255, 0, 0.9), 0 0 30px rgba(0, 255, 0, 0.6), 0 0 45px rgba(0, 255, 0, 0.4), 0 0 60px rgba(0, 255, 0, 0.2);
-    }
+  margin: 0 0 12px;
+  font-family: var(--pixel);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  text-wrap: balance;
 }
 
 .profile-description {
-    font-size: 2.4rem !important;
-    font-weight: 500;
-    color: #00b300;
-    margin-bottom: 30px;
-    font-family: 'VT323', monospace;
-    letter-spacing: 1px;
-    text-shadow: 0 0 5px rgba(0, 179, 0, 0.5), 0 0 10px rgba(0, 179, 0, 0.3), 0 3px 10px rgba(0, 179, 0, 0.2);
-    background-color: rgba(0, 0, 0, 0.9);
-    padding: 10px 20px;
-    border-radius: 5px;
-    display: inline-block;
-    border: 1px solid rgba(0, 179, 0, 0.3);
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  max-width: 42ch;
+  margin-inline: auto;
+  text-wrap: balance;
 }
 
-.panel {
-    background-color: rgba(17, 17, 17, 0.95);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border: 1.5px solid #00ff00;
-    border-radius: 4px;
-    box-shadow: 0 0 8px rgba(0, 255, 0, 0.35), 0 0 15px rgba(0, 255, 0, 0.25), 0 0 22px rgba(0, 255, 0, 0.15), 0 10px 20px rgba(0, 255, 0, 0.1);
-    margin-bottom: 20px;
-    margin-top: 25px;
-    position: relative;
-    transition: box-shadow 0.3s ease, transform 0.2s ease;
+/* ------------------------------------------------------------
+   Link lists
+   ------------------------------------------------------------ */
+.link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.panel-body {
-    background-color: #2a2a2a;
-    padding: 15px;
+.link-list a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  font-size: 15px;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.link-list li:last-child a { border-bottom: 0; }
+
+/* Selection in System 6 was a straight video invert. */
+.link-list a:hover,
+.link-list a:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
 }
 
-.panel:hover {
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.45), 0 0 20px rgba(0, 255, 0, 0.35), 0 0 30px rgba(0, 255, 0, 0.25), 0 15px 30px rgba(0, 255, 0, 0.15);
-    transform: translateY(-2px);
+.link-list i {
+  flex: none;
+  width: 1.15em;
+  text-align: center;
+  font-size: 0.95em;
 }
 
-.panel::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0, 255, 0, 0.05), rgba(0, 255, 0, 0));
-    pointer-events: none;
-    z-index: 1;
+/* Social grid */
+.link-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
-.panel-default > .panel-heading {
-    color: #00ff00;
-    background-color: #222 !important;
-    border-color: #00ff00;
-    border-bottom: 1px solid #00ff00;
+.link-grid a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  border-right: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.link-grid a:hover,
+.link-grid a:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
 }
 
-.panel-heading {
-    background-color: #111 !important;
-    border-bottom: 1px solid #00ff00;
+.link-grid i {
+  flex: none;
+  width: 1.15em;
+  text-align: center;
+  font-size: 0.95em;
 }
 
-.panel-title {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #00ff00;
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.3), 0 2px 8px rgba(0, 255, 0, 0.2);
-    font-family: 'VT323', monospace;
-    letter-spacing: 1px;
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+.desk-footer {
+  width: 100%;
+  margin: 6px 0 44px;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: var(--chrome) solid var(--ink);
+  box-shadow: var(--drop) var(--drop) 0 var(--shadow);
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-faint);
 }
-
-.list-group-item {
-    position: relative;
-    display: block;
-    padding: 10px 15px;
-    margin-bottom: -1px;
-    background-color: #2a2a2a !important;
-    border: 1px solid #3c3c3c;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border-left: 3px solid transparent;
+.desk-footer p { margin: 0; }
+.desk-footer .shutdown {
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
 }
-
-.list-group-item:first-child {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+.desk-footer a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
+.desk-footer a:hover { color: var(--ink); }
 
-.list-group-item:last-child {
-    margin-bottom: 0;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-}
-
-a.list-group-item {
-    color: #ffffff !important;
-}
-
-a.list-group-item:hover,
-a.list-group-item:focus {
-    color: #ffffff !important;
-    text-decoration: none;
-    background-color: #1a1a1a;
-    border-left: 3px solid #00ff00;
-    padding-left: 20px;
-}
-
-.list-group-item:before {
-    content: "> ";
-    color: #00ff00;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.list-group-item:hover:before {
-    opacity: 1;
-}
-
-footer.text-center {
-    margin: 30px 0;
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.list-group-item i {
-    margin-right: 10px;
-    color: #00b300;
-    text-shadow: 0 0 5px rgba(0, 179, 0, 0.4);
-    transition: text-shadow 0.3s ease, transform 0.2s ease;
-    width: 1.25em;
-    text-align: center;
-}
-
-.list-group-item:hover i {
-    text-shadow: 0 0 8px rgba(0, 179, 0, 0.6), 0 0 15px rgba(0, 179, 0, 0.4);
-    transform: scale(1.2);
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-}
-
+/* ------------------------------------------------------------
+   Scrollbar — dithered track, solid thumb, in keeping.
+   ------------------------------------------------------------ */
+::-webkit-scrollbar { width: 15px; }
 ::-webkit-scrollbar-track {
-    background: #000;
+  background-color: var(--paper);
+  background-image: repeating-conic-gradient(var(--desk-dot) 0% 25%, var(--paper) 0% 50%);
+  background-size: 4px 4px;
+  border-left: var(--chrome) solid var(--ink);
 }
-
 ::-webkit-scrollbar-thumb {
-    background: #00b300;
-    border-radius: 4px;
+  background: var(--paper);
+  border: var(--chrome) solid var(--ink);
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #00ff00;
+/* ------------------------------------------------------------
+   Focus — System 6 marked focus with a dotted rectangle.
+   ------------------------------------------------------------ */
+:focus-visible { outline: 2px dotted var(--ink); outline-offset: 2px; }
+.mute-button:focus-visible { outline-offset: 3px; }
+
+::selection { background: var(--ink); color: var(--paper); }
+
+/* ------------------------------------------------------------
+   Small screens
+   ------------------------------------------------------------ */
+@media (max-width: 620px) {
+  :root { --menubar-h: 26px; }
+
+  .desktop { padding-top: calc(var(--menubar-h) + 28px); gap: 20px; }
+  .menubar { padding: 0 2px; }
+  .menubar-apple { padding: 0 8px; }
+  .menubar-item { padding: 0 7px; font-size: 10px; }
+  .menubar-clock { display: none; }
+
+  .profile-title { font-size: 22px; }
+  .profile-description { font-size: 14px; }
+  .win-title { font-size: 10px; }
+  .link-list a { font-size: 14px; padding: 12px 14px; }
+  .link-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-.terminal-cursor {
-    display: inline-block;
-    width: 10px;
-    height: 18px;
-    background-color: #00ff00;
-    margin-left: 5px;
-    animation: blink 1s step-end infinite;
-    vertical-align: middle;
-}
-
-@keyframes blink {
-    from, to { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-@keyframes flicker {
-    0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90%, 100% { opacity: 0.97; }
-    5%, 25%, 45%, 65%, 85% { opacity: 0.95; }
-    15%, 35%, 55%, 75%, 95% { opacity: 0.94; }
-}
-
-button:focus, video:focus {
-    outline: 2px solid #00ff00;
-    outline-offset: 2px;
-}
-
-.text-center {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-@media (max-width: 768px) {
-    .profile-title {
-        font-size: 3.6rem !important;
-    }
-    
-    .profile-description {
-        font-size: 2rem !important;
-    }
-    
-    .panel-title {
-        font-size: 1.3rem;
-    }
-    
-    .tv-setup {
-        width: 45vw;
-    }
-    
-    .mute-button {
-        width: 25px;
-        height: 25px;
-        font-size: 0.8rem;
-    }
-    
-    .video-container {
-        width: 80%;
-        height: 80%;
-    }
-    
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

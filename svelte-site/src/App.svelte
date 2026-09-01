@@ -1,15 +1,28 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import './app.css';
-  import MatrixRain from './MatrixRain.svelte';
 
   let video;
   let isMuted = $state(true);
+  let clock = $state('');
+  let clockTimer;
+
+  function tick() {
+    clock = new Date()
+      .toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+      .toLowerCase();
+  }
 
   onMount(() => {
     if (video) {
       video.muted = true;
     }
+    tick();
+    clockTimer = setInterval(tick, 15000);
+  });
+
+  onDestroy(() => {
+    if (clockTimer) clearInterval(clockTimer);
   });
 
   function handleVideoClick() {
@@ -66,6 +79,14 @@
     { href: "https://venmo.com/johnny-xmas", icon: "fa-solid fa-dollar-sign", text: "Venmo" },
     { href: "https://www.paypal.com/paypalme/johnnyxmas", icon: "fa-brands fa-paypal", text: "PayPal" }
   ];
+
+  const menus = [
+    { href: "#media-presentations", text: "Media" },
+    { href: "#contact-me", text: "Contact" },
+    { href: "#social-media", text: "Social" },
+    { href: "#podcasts", text: "Podcasts" },
+    { href: "#support-me", text: "Support" }
+  ];
 </script>
 
 <svelte:head>
@@ -89,134 +110,168 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/solid.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css">
 </svelte:head>
 
-<MatrixRain />
+<nav class="menubar" aria-label="Sections">
+  <span class="menubar-apple" aria-hidden="true">
+    <svg viewBox="0 0 20 24" width="13" height="16" fill="currentColor" role="presentation">
+      <path d="M13.4 6.3c1.4 0 2.9.7 3.9 1.9-3.4 2.1-2.9 7 .8 8.3-.8 2.2-2.7 5.1-4.3 5.1-1.1 0-1.6-.7-2.9-.7s-1.9.7-2.9.7c-1.9 0-4.9-4.4-4.9-8.1 0-4 2.5-6 4.9-6 1.3 0 2.3.8 3.1.8.7 0 1.9-.9 2.3-.9z"/>
+      <path d="M13.1 0c.2 1.8-1.1 3.8-2.9 4C10 2.2 11.5.3 13.1 0z"/>
+    </svg>
+  </span>
+  {#each menus as menu}
+    <a class="menubar-item" href={menu.href}>{menu.text}</a>
+  {/each}
+  <span class="menubar-clock">{clock}</span>
+</nav>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="text-center">
-        <div class="tv-setup">
-          <div class="video-container">
-            <video
-              bind:this={video}
-              id="main-video" 
-              autoplay 
-              loop 
-              playsinline 
-              preload="auto" 
-              aria-label="Johnny Xmas video"
-              onclick={handleVideoClick}
-            >
-              <source src="/assets/vid/jtv.mp4" type="video/mp4">
-              <p>Your browser doesn't support HTML5 video. <a href="/assets/vid/jtv.mp4">Download the video</a> instead.</p>
-            </video>
-          </div>
-          <img src="/assets/img/crt.png" alt="Johnny Xmas" class="tv-overlay">
-          <button
-            id="mute-toggle"
-            class="mute-button"
-            title="Toggle audio"
-            aria-label="Toggle audio"
-            aria-pressed={isMuted}
-            onclick={toggleMute}
-          >
-            <i class={isMuted ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark'}></i>
-          </button>
-          <div class="sound-hint">click speaker for sound</div>
-        </div>
-        <h1 class="profile-title">@johnnyxmas</h1>
-        <p class="profile-description">Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con<span class="terminal-cursor"></span></p>
-      </div>
-      
-      <div id="media-presentations" class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><span class="terminal-prompt">root@j0hnnyxm4s:~# </span>Media and Presentations</h3>
-        </div>
-        <div class="panel-body">
-          <div class="list-group">
-            {#each mediaLinks as link}
-              <a href={link.href} class="list-group-item" target="_blank" rel="noopener noreferrer">
-                <i class="{link.icon}"></i> {link.text}
-              </a>
-            {/each}
-          </div>
-        </div>
-      </div>
+<main class="desktop">
 
-      <div id="contact-me" class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><span class="terminal-prompt">root@j0hnnyxm4s:~# </span>Contact Me</h3>
-        </div>
-        <div class="panel-body">
-          <div class="list-group">
-            {#each contactLinks as link}
-              <a href={link.href} class="list-group-item" target="_blank" rel="noopener noreferrer">
-                <i class="{link.icon}"></i> {link.text}
-              </a>
-            {/each}
-          </div>
-        </div>
-      </div>
-
-      <div id="social-media" class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><span class="terminal-prompt">root@j0hnnyxm4s:~# </span>Social Media</h3>
-        </div>
-        <div class="panel-body">
-          <div class="list-group">
-            {#each socialLinks as link}
-              <a href={link.href} class="list-group-item" target="_blank" rel="noopener noreferrer">
-                <i class="{link.icon}"></i> {link.text}
-              </a>
-            {/each}
-          </div>
-        </div>
-      </div>
-
-      <div id="podcasts" class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><span class="terminal-prompt">root@j0hnnyxm4s:~# </span>Podcasts</h3>
-        </div>
-        <div class="panel-body">
-          <div class="list-group">
-            {#each podcastLinks as link}
-              <a href={link.href} class="list-group-item" target="_blank" rel="noopener noreferrer">
-                <i class="{link.icon}"></i> {link.text}
-              </a>
-            {/each}
-          </div>
-        </div>
-      </div>
-      
-      <div id="support-me" class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><span class="terminal-prompt">root@j0hnnyxm4s:~# </span>Support Me</h3>
-        </div>
-        <div class="panel-body">
-          <div class="list-group">
-            {#each supportLinks as link}
-              <a href={link.href} class="list-group-item" target="_blank" rel="noopener noreferrer">
-                <i class="{link.icon}"></i> {link.text}
-              </a>
-            {/each}
-          </div>
-        </div>
-      </div>
-      
-      <footer class="text-center">
-        <div class="terminal-command">exit</div>
-        <p>&copy; {new Date().getFullYear()} Johnny Xmas</p>
-        <p>Uses code from <a href="https://github.com/twbs/bootstrap" target="_blank" rel="noopener noreferrer">Bootstrap</a> and <a href="https://github.com/Bachittarjeet/Hacker-Bootstrap-Template" target="_blank" rel="noopener noreferrer">Hacker-Bootstrap-Template</a></p>
-      </footer>
+  <!-- The video, presented as a movie window on the desktop -->
+  <section class="win movie">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">jtv.mp4</h2>
     </div>
+    <div class="win-body">
+      <div class="movie-screen">
+        <video
+          bind:this={video}
+          id="main-video"
+          autoplay
+          loop
+          playsinline
+          preload="auto"
+          aria-label="Johnny Xmas showreel"
+          onclick={handleVideoClick}
+        >
+          <source src="/assets/vid/jtv.mp4" type="video/mp4">
+          <p>Your browser doesn't support HTML5 video. <a href="/assets/vid/jtv.mp4">Download the video</a> instead.</p>
+        </video>
+      </div>
+      <div class="movie-controls">
+        <button
+          id="mute-toggle"
+          class="mute-button"
+          title={isMuted ? 'Turn sound on' : 'Turn sound off'}
+          aria-label={isMuted ? 'Turn sound on' : 'Turn sound off'}
+          aria-pressed={!isMuted}
+          onclick={toggleMute}
+        >
+          <i class={isMuted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high'}></i>
+        </button>
+        <span class="sound-hint">{isMuted ? 'Click for sound' : 'Sound on'}</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="nameplate">
+    <h1 class="profile-title">@johnnyxmas</h1>
+    <p class="profile-description">Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con</p>
   </div>
-</div>
+
+  <section id="media-presentations" class="win">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">Media and Presentations</h2>
+    </div>
+    <div class="win-body">
+      <ul class="link-list">
+        {#each mediaLinks as link}
+          <li>
+            <a href={link.href} target="_blank" rel="noopener noreferrer">
+              <i class={link.icon} aria-hidden="true"></i>{link.text}
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact-me" class="win">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">Contact Me</h2>
+    </div>
+    <div class="win-body">
+      <ul class="link-list">
+        {#each contactLinks as link}
+          <li>
+            <a href={link.href} target="_blank" rel="noopener noreferrer">
+              <i class={link.icon} aria-hidden="true"></i>{link.text}
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </section>
+
+  <section id="social-media" class="win">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">Social Media</h2>
+    </div>
+    <div class="win-body">
+      <ul class="link-grid">
+        {#each socialLinks as link}
+          <li>
+            <a href={link.href} target="_blank" rel="noopener noreferrer">
+              <i class={link.icon} aria-hidden="true"></i>{link.text}
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </section>
+
+  <section id="podcasts" class="win">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">Podcasts</h2>
+    </div>
+    <div class="win-body">
+      <ul class="link-list">
+        {#each podcastLinks as link}
+          <li>
+            <a href={link.href} target="_blank" rel="noopener noreferrer">
+              <i class={link.icon} aria-hidden="true"></i>{link.text}
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </section>
+
+  <section id="support-me" class="win">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">Support Me</h2>
+    </div>
+    <div class="win-body">
+      <ul class="link-list">
+        {#each supportLinks as link}
+          <li>
+            <a href={link.href} target="_blank" rel="noopener noreferrer">
+              <i class={link.icon} aria-hidden="true"></i>{link.text}
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </section>
+
+  <footer class="desk-footer">
+    <span class="shutdown">Special &#9654; Shut Down</span>
+    <p>&copy; {new Date().getFullYear()} Johnny Xmas</p>
+    <p>Built with <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer">Svelte</a>. Originally based on <a href="https://github.com/Bachittarjeet/Hacker-Bootstrap-Template" target="_blank" rel="noopener noreferrer">Hacker-Bootstrap-Template</a>.</p>
+  </footer>
+
+</main>
