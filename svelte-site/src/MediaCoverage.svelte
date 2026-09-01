@@ -237,6 +237,8 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/solid.min.css">
+  <!-- brands: the YouTube icon in the nameplate. -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css">
 </svelte:head>
 
 <nav class="menubar" aria-label="Sections">
@@ -267,6 +269,11 @@
   <div class="nameplate">
     <h1 class="profile-title">Media Coverage</h1>
     <p class="profile-description">Press, interviews, and podcast appearances featuring Johnny Xmas.</p>
+    <p class="nameplate-aside">
+      Conference talks are on
+      <a href="https://www.youtube.com/johnnyxmas" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-youtube" aria-hidden="true"></i>YouTube</a>.
+    </p>
   </div>
 
   <div class="win-grid">
@@ -321,5 +328,24 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--ink-faint);
+  }
+
+  .nameplate-aside {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+  .nameplate-aside a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .nameplate-aside a:hover,
+  .nameplate-aside a:focus-visible {
+    color: var(--ink);
+    outline: none;
+  }
+  .nameplate-aside i {
+    margin-right: 6px;
   }
 </style>
