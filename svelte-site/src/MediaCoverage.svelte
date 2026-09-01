@@ -86,9 +86,6 @@
     ] },
     { name: 'Marine Cyber', outlet: 'The Innocent Bystander Risk', links: [
       'https://maritimerisk.podbean.com/e/episode-12-marine-cyber-the-innocent-bystander-risk/'
-    ] },
-    { name: 'Hacker History', outlet: 'The History of Johnny Xmas', links: [
-      'https://hackerhistory.com/podcast/the-history-of-johnny-xmas/'
     ] }
   ];
 
