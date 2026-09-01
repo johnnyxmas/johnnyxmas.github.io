@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "npm run build && cp dist/index.html dist/404.html",
-    "sync": "npm run deploy && rm -f ../assets/index-*.css ../assets/index-*.js && find dist -name .DS_Store -delete && cp -R dist/. .."
+    "sync": "npm run deploy && find ../assets -maxdepth 1 \\( -name '*.css' -o -name '*.js' \\) -delete && rm -rf ../media-coverage && find dist -name .DS_Store -delete && cp -R dist/. .."
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.0.0",

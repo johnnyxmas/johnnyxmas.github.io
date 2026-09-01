@@ -68,7 +68,7 @@
   const mediaLinks = [
     { href: "https://www.papercall.io/speakers/johnnyxmas", icon: "fa-solid fa-file-lines", text: "Current Bio and Talks" },
     { href: "https://drive.google.com/drive/folders/1b5VjAcYUbHaZuLsWK5a_RkZiYffqUUOw?usp=sharing", icon: "fa-solid fa-chalkboard", text: "Presentation Decks" },
-    { href: "https://docs.google.com/document/d/1ustVSscr-2EE0SBO3efT-VxzbbaN17UQ3vUQfpWFFVw/edit?usp=sharing", icon: "fa-solid fa-clapperboard", text: "Media Coverage" }
+    { href: "/media-coverage/", icon: "fa-solid fa-clapperboard", text: "Media Coverage" }
   ];
 
   const podcastLinks = [
@@ -189,7 +189,7 @@
       <ul class="link-list">
         {#each mediaLinks as link}
           <li>
-            <a href={link.href} target="_blank" rel="noopener noreferrer">
+            <a href={link.href} target={link.href.startsWith('/') ? undefined : '_blank'} rel={link.href.startsWith('/') ? undefined : 'noopener noreferrer'}>
               <i class={link.icon} aria-hidden="true"></i>{link.text}
             </a>
           </li>

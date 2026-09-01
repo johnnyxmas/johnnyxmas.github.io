@@ -73,8 +73,15 @@ body {
   align-items: center;
   padding: 0 12px;
   color: var(--ink);
+  text-decoration: none;
 }
 .menubar-apple svg { display: block; }
+a.menubar-apple:hover,
+a.menubar-apple:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
+}
 
 .menubar-item {
   display: flex;
@@ -350,6 +357,66 @@ body {
   width: 1.15em;
   text-align: center;
   font-size: 0.95em;
+}
+
+/* ------------------------------------------------------------
+   Press list (Media Coverage page)
+   ------------------------------------------------------------ */
+.press-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.press-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.press-item:last-child { border-bottom: 0; }
+
+.press-byline {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.press-outlet {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.press-note {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+.press-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 6px;
+}
+
+.press-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.press-links a:hover,
+.press-links a:focus-visible {
+  color: var(--ink);
+  text-decoration: underline;
+  outline: none;
+}
+
+.press-links i {
+  flex: none;
+  font-size: 0.85em;
 }
 
 /* ------------------------------------------------------------
