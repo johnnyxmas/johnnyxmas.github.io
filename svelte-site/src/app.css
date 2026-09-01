@@ -114,10 +114,24 @@ body {
   max-width: 700px;
   margin: 0 auto;
   padding: calc(var(--menubar-h) + 44px) 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
   gap: 26px;
+}
+
+/* The movie, nameplate, and footer stay full-width even when the
+   windows below them split into two columns. */
+.movie, .nameplate, .desk-footer {
+  grid-column: 1 / -1;
+}
+.movie { justify-self: center; }
+
+@media (min-width: 760px) {
+  .desktop {
+    max-width: 960px;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* ------------------------------------------------------------
