@@ -271,7 +271,7 @@
   <footer class="desk-footer">
     <span class="shutdown">Special &#9654; Shut Down</span>
     <p>&copy; {new Date().getFullYear()} Johnny Xmas</p>
-    <p>Built with <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer">Svelte</a>. Originally based on <a href="https://github.com/Bachittarjeet/Hacker-Bootstrap-Template" target="_blank" rel="noopener noreferrer">Hacker-Bootstrap-Template</a>.</p>
+    <p>Built with <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer">Svelte</a>.</p>
   </footer>
 
 </main>
