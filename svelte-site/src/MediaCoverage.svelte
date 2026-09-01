@@ -86,6 +86,9 @@
     ] },
     { name: 'Marine Cyber', outlet: 'The Innocent Bystander Risk', links: [
       'https://maritimerisk.podbean.com/e/episode-12-marine-cyber-the-innocent-bystander-risk/'
+    ] },
+    { name: 'Hacker History', outlet: 'The History of Johnny Xmas', links: [
+      'https://hackerhistory.com/podcast/the-history-of-johnny-xmas/'
     ] }
   ];
 
@@ -119,6 +122,10 @@
     ] },
     { name: 'Adnan Farooqui', outlet: 'Ubergizmo', links: [
       'http://www.ubergizmo.com/2016/07/3d-models-of-all-tsa-master-keys-now-available-online/'
+    ] },
+    { name: 'BleepingComputer', outlet: 'Malware Infiltrates Pidgin Messenger’s Official Plugin Repository', note: 'Credited with confirming the keylogger hidden in the ss-otr plugin.', links: [
+      'https://www.bleepingcomputer.com/news/security/malware-infiltrates-pidgin-messengers-official-plugin-repository/',
+      'https://www.scworld.com/brief/darkgate-malware-spread-through-malicious-pidgin-plugin'
     ] }
   ];
 
