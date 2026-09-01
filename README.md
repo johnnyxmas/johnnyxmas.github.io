@@ -21,7 +21,8 @@ Other scripts (all from `svelte-site/`):
 | `npm run dev` | Dev server with hot reload |
 | `npm run build` | Production build into `svelte-site/dist/` |
 | `npm run preview` | Serve the production build locally |
-| `npm run deploy` | Build, then add `.nojekyll` and `404.html` to `dist/` |
+| `npm run deploy` | Build, then generate `404.html` in `dist/` |
+| `npm run sync` | **Build and publish to the repo root** — the one you want |
 
 There are no tests or linters configured.
 
@@ -51,19 +52,18 @@ To add a whole new section, copy an existing `<section class="win">` block and g
 > **GitHub Pages serves from the repo root of `main`. There is no deploy workflow.**
 > The only file in `.github/workflows/` is `workflow-drift-detection.yml`, a scheduled security check — it does not build anything.
 
-This means a source change is **not live until you regenerate the build output at the repo root**:
+This means a source change is **not live until the build output at the repo root is regenerated**. One command does it:
 
 ```bash
-cd svelte-site && npm run deploy
-cd .. && rm -f assets/index-*.css assets/index-*.js && cp -R svelte-site/dist/. .
-git add -A && git commit -m "Rebuild site" && git push
+cd svelte-site && npm run sync
+cd .. && git add -A && git commit -m "Rebuild site" && git push
 ```
 
-Deleting the old `assets/index-*` files first is not optional — Vite emits a new content hash on every build, so stale bundles pile up at the root otherwise.
+`sync` builds, generates `404.html`, deletes the previous hashed bundles from the root, and copies the fresh build over. Do not do those steps by hand — Vite emits a new content hash on every build, and the failure mode is quiet: copy a new build over the root without clearing the old bundles and `404.html` is left pointing at an `assets/index-<oldhash>.js` that no longer exists, so the 404 page renders blank while the homepage looks perfectly fine.
 
-**Don't hand-edit `index.html`, `404.html`, or `assets/index-*` at the repo root.** They're generated; your changes will be overwritten by the next build. The source of truth is `svelte-site/src/`.
+**Don't hand-edit `index.html`, `404.html`, `.nojekyll`, or `assets/index-*` at the repo root.** All of it is generated. The source of truth is `svelte-site/src/` for code and `svelte-site/public/` for static files.
 
-Custom domain is set by `CNAME`, which exists in two places — the repo root and `svelte-site/public/` (so the build reproduces it). Keep them in sync.
+That includes `CNAME` and `.nojekyll`: the copies at the repo root are build output, reproduced from `svelte-site/public/` on every build. To change the custom domain, edit **`svelte-site/public/CNAME`** and run `npm run sync` — there is nothing to keep manually in sync.
 
 ---
 
@@ -126,13 +126,15 @@ There is **no Bootstrap.** It was removed deliberately: the markup had been usin
 
 ```
 ├── index.html, 404.html, assets/   ← generated build output (do not edit)
-├── CNAME, .nojekyll, favicons      ← Pages config, copied from public/
+├── CNAME, .nojekyll, favicons      ← also build output, from public/
 └── svelte-site/                    ← the actual source
     ├── src/
     │   ├── App.svelte              ← all markup + content arrays
     │   ├── app.css                 ← all styling
     │   └── main.js                 ← Svelte 5 mount entrypoint
     └── public/                     ← copied verbatim into the build
+        ├── CNAME, .nojekyll         ← edit the domain HERE, not at the root
+        ├── favicons
         └── assets/
             ├── vid/jtv.mp4         ← deployed video
             └── img/opengraph.jpg   ← social share card
