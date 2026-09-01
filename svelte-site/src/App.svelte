@@ -202,7 +202,7 @@
 
   <div class="nameplate">
     <h1 class="profile-title">@johnnyxmas</h1>
-    <p class="profile-description">Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con</p>
+    <p class="profile-description">My other computer is your computer.</p>
   </div>
 
   <div class="win-grid">
