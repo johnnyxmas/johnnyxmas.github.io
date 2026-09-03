@@ -8,30 +8,30 @@
          renders client-side, and social scrapers (Slack, iMessage, X,
          LinkedIn, Facebook) don't run JS, so anything Svelte injects on
          mount is invisible to them. Keep this in sync with App.svelte. -->
-    <title>Johnny Xmas | Hacker</title>
+    <title>Johnny Xmas | Hacker &amp; Cybersecurity Keynote Speaker</title>
     <meta
       name="description"
-      content="Johnny Xmas is a hacker and offensive security leader known for the TSA master key leaks and Venmo privacy research, as seen on Fox, NBC, Wired and TechCrunch."
+      content="Johnny Xmas is a hacker, offensive security leader and international keynote speaker, known for the TSA master key leaks and Venmo privacy research, as seen on Fox, NBC, Wired and TechCrunch. Available for conference keynotes, panels and corporate talks."
     />
     <link rel="canonical" href="https://johnnyxmas.net/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Johnny Xmas" />
     <meta property="og:url" content="https://johnnyxmas.net/" />
-    <meta property="og:title" content="Johnny Xmas | Hacker" />
+    <meta property="og:title" content="Johnny Xmas | Hacker &amp; Cybersecurity Keynote Speaker" />
     <meta
       property="og:description"
-      content="Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con."
+      content="Hacker, offensive security leader and keynote speaker — as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con. Booking now."
     />
     <meta property="og:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
     <meta property="og:image:alt" content="Johnny Xmas" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@J0hnnyXm4s" />
     <meta name="twitter:creator" content="@J0hnnyXm4s" />
-    <meta name="twitter:title" content="Johnny Xmas | Hacker" />
+    <meta name="twitter:title" content="Johnny Xmas | Hacker &amp; Cybersecurity Keynote Speaker" />
     <meta
       name="twitter:description"
-      content="Hacker as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con."
+      content="Hacker, offensive security leader and keynote speaker — as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con. Booking now."
     />
     <meta name="twitter:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
 
@@ -40,15 +40,39 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
+    <!-- The canonical Person node for the whole site. /speaking/ and
+         /media-coverage/ reference it by @id rather than restating it, so
+         crawlers see one entity instead of three near-duplicates. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
+        "@id": "https://johnnyxmas.net/#johnnyxmas",
         "name": "Johnny Xmas",
-        "alternateName": "Antonio “Johnny” Martinelli",
+        "alternateName": "Antonio \u201cJohnny\u201d Martinelli",
         "url": "https://johnnyxmas.net/",
+        "mainEntityOfPage": "https://johnnyxmas.net/",
+        "image": "https://johnnyxmas.net/assets/img/opengraph.jpg",
+        "email": "mailto:booking@johnnyxmas.net",
         "jobTitle": "Global Head of Offensive Security",
-        "description": "Hacker, speaker and offensive security leader, known for the TSA master key leaks and Venmo public-feed privacy research.",
+        "description": "Hacker, keynote speaker and offensive security leader, known for the TSA master key leaks and Venmo public-feed privacy research.",
+        "knowsAbout": [
+          "Offensive security",
+          "Penetration testing",
+          "Red teaming",
+          "OT security",
+          "Industrial control systems cybersecurity",
+          "IoT security",
+          "Security awareness",
+          "Information security governance and risk",
+          "Post-quantum cryptography",
+          "Social engineering and phishing"
+        ],
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "Certified Information Systems Security Professional (CISSP)"
+        },
         "sameAs": [
           "https://twitter.com/J0hnnyXm4s",
           "https://www.linkedin.com/in/johnnyxmas/",
@@ -56,7 +80,8 @@
           "https://bsky.app/profile/j0hnnyxm4s.bsky.social",
           "https://www.youtube.com/johnnyxmas",
           "https://github.com/johnnyxmas",
-          "https://keybase.io/j0hnnyxm4s"
+          "https://keybase.io/j0hnnyxm4s",
+          "https://sessionize.com/johnnyxmas"
         ]
       }
     </script>

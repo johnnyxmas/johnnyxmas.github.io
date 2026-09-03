@@ -13,6 +13,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         mediaCoverage: resolve(__dirname, 'media-coverage/index.html'),
+        speaking: resolve(__dirname, 'speaking/index.html'),
       },
       output: {
         manualChunks: undefined,

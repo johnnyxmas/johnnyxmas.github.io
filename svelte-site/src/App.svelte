@@ -82,6 +82,9 @@
   }
 
   const contactLinks = [
+    // Booking first and by email: conference organizers write from a work
+    // address, and won't install Signal to reach a speaker.
+    { href: "mailto:booking@johnnyxmas.net?subject=Speaking%20inquiry", icon: "fa-solid fa-envelope", text: "booking@johnnyxmas.net" },
     { href: "https://signal.group/#CjQKIGgT30VMU-FHAPM2TOqRKheN0mmwdQVSCC223V_aBM7xEhBWua03Mj5NxlAoG7AhYGxO", icon: "fa-solid fa-comment", text: "Signal" },
     { href: "https://t.me/j0hnnyxm4s", icon: "fa-solid fa-paper-plane", text: "Telegram" },
     { href: "https://keybase.io/j0hnnyxm4s", icon: "fa-solid fa-lock", text: "PGP Key" }
@@ -98,7 +101,7 @@
   ];
 
   const mediaLinks = [
-    { href: "https://www.papercall.io/speakers/johnnyxmas", icon: "fa-solid fa-file-lines", text: "Current Bio and Talks" },
+    { href: "/speaking/", icon: "fa-solid fa-microphone-lines", text: "Speaking: Talks and Booking" },
     { href: "https://drive.google.com/drive/folders/1b5VjAcYUbHaZuLsWK5a_RkZiYffqUUOw?usp=sharing", icon: "fa-solid fa-chalkboard", text: "Presentation Decks" },
     { href: "/media-coverage/", icon: "fa-solid fa-clapperboard", text: "Media Coverage" }
   ];
@@ -113,6 +116,7 @@
   ];
 
   const menus = [
+    { href: "/speaking/", text: "Speaking" },
     { href: "#media-presentations", text: "Media" },
     { href: "#contact-me", text: "Contact" },
     { href: "#social-media", text: "Social" },
@@ -207,6 +211,36 @@
 
   <div class="win-grid">
 
+  <!-- First in the grid on purpose: this is the page's conversion surface.
+       The prose is here rather than only on /speaking/ so the homepage
+       itself carries the speaker keywords a crawler reads. -->
+  <section id="speaking" class="win">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">Speaking</h2>
+    </div>
+    <div class="win-body">
+      <p class="win-prose">
+        I keynote and present at security conferences worldwide on offensive
+        security, penetration testing, OT and industrial control systems, and
+        the human failures underneath all of it — DefCamp, HOPE, Hackfest,
+        GrrCON, THOTCON, CypherCon, BSides and the ManuSec Summit, among others.
+      </p>
+      <ul class="link-list">
+        <li>
+          <a href="/speaking/">
+            <i class="fa-solid fa-microphone-lines" aria-hidden="true"></i>Talks, stages and booking
+          </a>
+        </li>
+        <li>
+          <a href="mailto:booking@johnnyxmas.net?subject=Speaking%20inquiry">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>booking@johnnyxmas.net
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <section id="media-presentations" class="win">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
@@ -234,7 +268,7 @@
       <ul class="link-list">
         {#each contactLinks as link}
           <li>
-            <a href={link.href} target="_blank" rel="noopener noreferrer">
+            <a href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}>
               <i class={link.icon} aria-hidden="true"></i>{link.text}
             </a>
           </li>

@@ -31,6 +31,12 @@ const PAGES = [
     sources: ['index.html', 'src/App.svelte', 'src/main.js'],
   },
   {
+    loc: '/speaking/',
+    priority: '0.9',
+    changefreq: 'monthly',
+    sources: ['speaking/index.html', 'src/Speaking.svelte', 'src/speaking-main.js'],
+  },
+  {
     loc: '/media-coverage/',
     priority: '0.8',
     changefreq: 'monthly',

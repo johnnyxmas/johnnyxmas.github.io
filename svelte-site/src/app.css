@@ -358,6 +358,16 @@ a.menubar-apple:focus-visible {
 /* ------------------------------------------------------------
    Link lists
    ------------------------------------------------------------ */
+/* Body copy inside a window, above its link rows. */
+.win-prose {
+  margin: 0;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
 .link-list {
   list-style: none;
   margin: 0;

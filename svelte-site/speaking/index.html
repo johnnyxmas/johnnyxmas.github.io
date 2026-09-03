@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Crawler-facing metadata lives here, not in <svelte:head>: the app
+         renders client-side, and social scrapers don't run JS. Keep this in
+         sync with Speaking.svelte. -->
+    <title>Cybersecurity Keynote Speaker | Johnny Xmas</title>
+    <meta
+      name="description"
+      content="Book Johnny Xmas — hacker, Global Head of Offensive Security and international keynote speaker on penetration testing, OT and ICS security, post-quantum readiness and security awareness. Talks, past stages and booking contact."
+    />
+    <link rel="canonical" href="https://johnnyxmas.net/speaking/" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Johnny Xmas" />
+    <meta property="og:url" content="https://johnnyxmas.net/speaking/" />
+    <meta property="og:title" content="Cybersecurity Keynote Speaker | Johnny Xmas" />
+    <meta
+      property="og:description"
+      content="Keynotes and technical sessions on offensive security, OT and ICS, and the human side of the whole mess. DefCamp, HOPE, Hackfest, GrrCON, THOTCON, BSides, ManuSec."
+    />
+    <meta property="og:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
+    <meta property="og:image:alt" content="Johnny Xmas" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@J0hnnyXm4s" />
+    <meta name="twitter:creator" content="@J0hnnyXm4s" />
+    <meta name="twitter:title" content="Cybersecurity Keynote Speaker | Johnny Xmas" />
+    <meta
+      name="twitter:description"
+      content="Keynotes and technical sessions on offensive security, OT and ICS, and the human side of the whole mess. DefCamp, HOPE, Hackfest, GrrCON, THOTCON, BSides, ManuSec."
+    />
+    <meta name="twitter:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- The canonical Person node lives on the homepage; this page references
+         it by @id rather than restating it. Past appearances are an ItemList,
+         deliberately not Event markup: Google's event rich results are for
+         upcoming ticketed events, and marking up a back catalogue that way
+         reads as spam. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "name": "Speaking — Johnny Xmas",
+        "url": "https://johnnyxmas.net/speaking/",
+        "description": "Keynotes, technical sessions and panels by Johnny Xmas on offensive security, OT and ICS security, and security awareness.",
+        "mainEntity": { "@id": "https://johnnyxmas.net/#johnnyxmas" },
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Johnny Xmas",
+          "url": "https://johnnyxmas.net/"
+        },
+        "hasPart": {
+          "@type": "ItemList",
+          "name": "Talks currently on offer",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Your OT Environment Isn't Ready for a Pentest" },
+            { "@type": "ListItem", "position": 2, "name": "5 Lies Enterprise Security Still Tells Itself" },
+            { "@type": "ListItem", "position": 3, "name": "Superposition, not Superstition" },
+            { "@type": "ListItem", "position": 4, "name": "Airgap the Airheads: Imprisoning Serial Phish Clickers" },
+            { "@type": "ListItem", "position": 5, "name": "Poisoning Pidgins in the Park" },
+            { "@type": "ListItem", "position": 6, "name": "SIEM and the Art of Motorcycle Maintenance" },
+            { "@type": "ListItem", "position": 7, "name": "Saving Ryan's Privates" },
+            { "@type": "ListItem", "position": 8, "name": "Ask a (Real) Hacker!" },
+            { "@type": "ListItem", "position": 9, "name": "InfoSecs and the City" },
+            { "@type": "ListItem", "position": 10, "name": "IC (What You Did There)" },
+            { "@type": "ListItem", "position": 11, "name": "Travel Hacks for the Traveling Hacker" }
+          ]
+        }
+      }
+    </script>
+    <script>
+      // Applied before paint so a stored dark/light override doesn't
+      // flash the system-default theme first. Kept in sync with
+      // src/lib/theme.js — see the note there.
+      try {
+        var stored = localStorage.getItem('theme-preference');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/speaking-main.js"></script>
+  </body>
+</html>

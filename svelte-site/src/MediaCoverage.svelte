@@ -249,6 +249,7 @@
     </svg>
   </a>
   <a class="menubar-item" href="/">&larr; Home</a>
+  <a class="menubar-item" href="/speaking/">Speaking</a>
   {#each sections as section}
     <a class="menubar-item" href={`#${section.id}`}>{section.title}</a>
   {/each}
@@ -270,9 +271,9 @@
     <h1 class="profile-title">Media Coverage</h1>
     <p class="profile-description">Press, interviews, and podcast appearances featuring Johnny Xmas.</p>
     <p class="nameplate-aside">
-      Conference talks are on
-      <a href="https://www.youtube.com/johnnyxmas" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-youtube" aria-hidden="true"></i>YouTube</a>.
+      Looking to book a talk? See
+      <a href="/speaking/"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i>Speaking</a>
+      for the current talk list, past stages and booking contact.
     </p>
   </div>
 
