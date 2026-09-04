@@ -10,9 +10,11 @@ export { render } from 'svelte/server'
 import App from './App.svelte'
 import MediaCoverage from './MediaCoverage.svelte'
 import Speaking from './Speaking.svelte'
+import NotFound from './NotFound.svelte'
 
 export const pages = {
   'index.html': App,
   'speaking/index.html': Speaking,
   'media-coverage/index.html': MediaCoverage,
+  '404.html': NotFound,
 }

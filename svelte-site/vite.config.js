@@ -14,6 +14,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         mediaCoverage: resolve(__dirname, 'media-coverage/index.html'),
         speaking: resolve(__dirname, 'speaking/index.html'),
+        notFound: resolve(__dirname, '404.html'),
       },
       output: {
         manualChunks: undefined,

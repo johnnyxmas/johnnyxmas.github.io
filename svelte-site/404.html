@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- A real page now, not a copy of the homepage. noindex because a 404
+         should never be in the index; it is also deliberately absent from
+         sitemap.xml. -->
+    <meta name="robots" content="noindex" />
+    <title>404 — Page Not Found | Johnny Xmas</title>
+    <meta
+      name="description"
+      content="That page could not be found. It may have been renamed, deleted, or moved."
+    />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <script>
+      // Applied before paint so a stored dark/light override doesn't
+      // flash the system-default theme first. Kept in sync with
+      // src/lib/theme.js — see the note there.
+      try {
+        var stored = localStorage.getItem('theme-preference');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/not-found-main.js"></script>
+  </body>
+</html>

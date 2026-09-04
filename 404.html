@@ -4,91 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Crawler-facing metadata lives here, not in <svelte:head>: the app
-         renders client-side, and social scrapers (Slack, iMessage, X,
-         LinkedIn, Facebook) don't run JS, so anything Svelte injects on
-         mount is invisible to them. Keep this in sync with App.svelte. -->
-    <title>Johnny Xmas | Hacker &amp; Cybersecurity Keynote Speaker</title>
+    <!-- A real page now, not a copy of the homepage. noindex because a 404
+         should never be in the index; it is also deliberately absent from
+         sitemap.xml. -->
+    <meta name="robots" content="noindex" />
+    <title>404 — Page Not Found | Johnny Xmas</title>
     <meta
       name="description"
-      content="Johnny Xmas is a hacker, offensive security leader and international keynote speaker, known for the TSA master key leaks and Venmo privacy research, as seen on Fox, NBC, Wired and TechCrunch. Available for conference keynotes, panels and corporate talks."
+      content="That page could not be found. It may have been renamed, deleted, or moved."
     />
-    <link rel="canonical" href="https://johnnyxmas.net/" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Johnny Xmas" />
-    <meta property="og:url" content="https://johnnyxmas.net/" />
-    <meta property="og:title" content="Johnny Xmas | Hacker &amp; Cybersecurity Keynote Speaker" />
-    <meta
-      property="og:description"
-      content="Hacker, offensive security leader and keynote speaker — as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con. Booking now."
-    />
-    <meta property="og:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
-    <meta property="og:image:alt" content="Johnny Xmas" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@J0hnnyXm4s" />
-    <meta name="twitter:creator" content="@J0hnnyXm4s" />
-    <meta name="twitter:title" content="Johnny Xmas | Hacker &amp; Cybersecurity Keynote Speaker" />
-    <meta
-      name="twitter:description"
-      content="Hacker, offensive security leader and keynote speaker — as seen on Fox, NBC, Wired, TechCrunch, and your favorite infosec con. Booking now."
-    />
-    <meta name="twitter:image" content="https://johnnyxmas.net/assets/img/opengraph.jpg" />
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-    <!-- The canonical Person node for the whole site. /speaking/ and
-         /media-coverage/ reference it by @id rather than restating it, so
-         crawlers see one entity instead of three near-duplicates. -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "@id": "https://johnnyxmas.net/#johnnyxmas",
-        "name": "Johnny Xmas",
-        "alternateName": "Antonio \u201cJohnny\u201d Martinelli",
-        "url": "https://johnnyxmas.net/",
-        "mainEntityOfPage": "https://johnnyxmas.net/",
-        "image": "https://johnnyxmas.net/assets/img/opengraph.jpg",
-        "email": "mailto:booking@johnnyxmas.net",
-        "jobTitle": "Global Head of Offensive Security",
-        "description": "Hacker, keynote speaker and offensive security leader, known for the TSA master key leaks and Venmo public-feed privacy research.",
-        "knowsAbout": [
-          "Offensive security",
-          "Penetration testing",
-          "Red teaming",
-          "OT security",
-          "Industrial control systems cybersecurity",
-          "IoT security",
-          "Security awareness",
-          "Information security governance and risk",
-          "AI-driven attacks and AI security",
-          "Post-quantum cryptography",
-          "Social engineering and phishing"
-        ],
-        "hasCredential": {
-          "@type": "EducationalOccupationalCredential",
-          "credentialCategory": "certification",
-          "name": "Certified Information Systems Security Professional (CISSP)"
-        },
-        "sameAs": [
-          "https://twitter.com/J0hnnyXm4s",
-          "https://www.linkedin.com/in/johnnyxmas/",
-          "https://infosec.exchange/@j0hnnyxm4s",
-          "https://bsky.app/profile/j0hnnyxm4s.bsky.social",
-          "https://www.youtube.com/johnnyxmas",
-          "https://github.com/johnnyxmas",
-          "https://keybase.io/j0hnnyxm4s",
-          "https://sessionize.com/johnnyxmas"
-        ]
-      }
-    </script>
     <script>
       // Applied before paint so a stored dark/light override doesn't
-      // flash the system-default theme first.
+      // flash the system-default theme first. Kept in sync with
+      // src/lib/theme.js — see the note there.
       try {
         var stored = localStorage.getItem('theme-preference');
         if (stored === 'light' || stored === 'dark') {
@@ -96,18 +30,13 @@
         }
       } catch (e) {}
     </script>
-    <script type="module" crossorigin src="/assets/main-D7BUUpP8.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/chunk-CTGkEGA9.js">
-    <link rel="modulepreload" crossorigin href="/assets/chunk-C5Wsw6Z7.js">
+    <script type="module" crossorigin src="/assets/notFound-CNUXn1RA.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/chunk-DHS2-Rc8.js">
     <link rel="stylesheet" crossorigin href="/assets/style-BfvS-NIe.css">
-  <!--1n46o8q--><link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png"/> <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png"/> <meta name="theme-color" content="#ffffff"/> <link rel="preconnect" href="https://fonts.googleapis.com"/> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/> <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet"/> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css"/> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/solid.min.css"/> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css"/><!---->
+    <link rel="stylesheet" crossorigin href="/assets/style-BKUg_sYO.css">
+  <!--1mozb9g--><meta name="theme-color" content="#ffffff"/> <link rel="preconnect" href="https://fonts.googleapis.com"/> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/> <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet"/> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css"/> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/solid.min.css"/><!---->
   </head>
   <body>
-    <div id="app"><!--[--><nav class="menubar" aria-label="Sections"><span class="menubar-apple" aria-hidden="true"><svg viewBox="0 0 20 24" width="13" height="16" fill="currentColor" role="presentation"><path d="M13.4 6.3c1.4 0 2.9.7 3.9 1.9-3.4 2.1-2.9 7 .8 8.3-.8 2.2-2.7 5.1-4.3 5.1-1.1 0-1.6-.7-2.9-.7s-1.9.7-2.9.7c-1.9 0-4.9-4.4-4.9-8.1 0-4 2.5-6 4.9-6 1.3 0 2.3.8 3.1.8.7 0 1.9-.9 2.3-.9z"></path><path d="M13.1 0c.2 1.8-1.1 3.8-2.9 4C10 2.2 11.5.3 13.1 0z"></path></svg></span> <!--[--><a class="menubar-item" href="/speaking/">Speaking</a><a class="menubar-item" href="#media-presentations">Media</a><a class="menubar-item" href="#contact-me">Contact</a><a class="menubar-item" href="#social-media">Social</a><a class="menubar-item" href="#podcasts">Podcasts</a><!--]--> <button type="button" class="menubar-theme" title="Theme: matching system (currently light)" aria-label="Theme: matching system (currently light). Click to change."><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button> <span class="menubar-clock"></span></nav> <main class="desktop"><div class="hero"><div class="nameplate"><h1 class="profile-title">@johnnyxmas</h1> <p class="profile-description">My other computer is your computer.</p> <p class="profile-role">Hacker · Global Head of Offensive Security ·
-        International keynote speaker</p> <p class="nameplate-cta"><a href="/speaking/"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i>Speaking &amp; booking</a></p></div> <section class="win movie"><div class="win-bar"><span class="win-close" aria-hidden="true"></span> <h2 class="win-title">jtv.mp4</h2></div> <div class="win-body"><div class="movie-screen"><video id="main-video" autoplay="" loop="" playsinline="" preload="auto" aria-label="Johnny Xmas showreel"><source src="/assets/vid/jtv.mp4" type="video/mp4"/> <p>Your browser doesn't support HTML5 video. <a href="/assets/vid/jtv.mp4">Download the video</a> instead.</p></video></div> <div class="movie-controls"><button id="mute-toggle" class="mute-button" title="Turn sound on" aria-label="Turn sound on" aria-pressed="false"><i class="fa-solid fa-volume-xmark"></i></button> <span class="sound-hint">Click for sound</span></div></div></section></div> <section class="win" aria-label="Conferences spoken at"><div class="win-bar"><span class="win-close" aria-hidden="true"></span> <h2 class="win-title">Stages Since 2004</h2></div> <div class="win-body"><ul class="con-wall"><!--[--><li>DEF CON</li><li>DefCamp</li><li>HOPE</li><li>DerbyCon</li><li>GrrCON</li><li>THOTCON</li><li>CypherCon</li><li>Hackfest</li><li>BSides Las Vegas</li><li>QCon New York</li><li>ManuSec Summit</li><li>CircleCityCon</li><li>ShowMeCon</li><li>DakotaCon</li><li>SecretCon</li><li>Graylog GO!</li><li>Rochester Security Summit</li><li>Securing Sexuality</li><li>ISSA Chicago</li><li>Converge Detroit</li><li>WOPR Summit</li><li>BSides Nashville</li><li>BSides Detroit</li><li>GRIMM</li><li>Hak4Kidz</li><li>PhreakNIC</li><li>GenCon</li><li>BSides312</li><!--]--></ul></div></section> <div class="win-grid"><section id="speaking" class="win"><div class="win-bar"><span class="win-close" aria-hidden="true"></span> <h2 class="win-title">Speaking</h2></div> <div class="win-body"><p class="win-prose">I keynote and present at security conferences worldwide on offensive
-        security, penetration testing, OT and industrial control systems, and
-        the human failures underneath all of it — DEF CON, HOPE, DefCamp,
-        DerbyCon, GrrCON, THOTCON, CypherCon, Hackfest, BSides and the ManuSec
-        Summit, among others.</p> <ul class="link-list"><li><a href="/speaking/"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i>Talks, stages and booking</a></li> <li><a href="mailto:booking@johnnyxmas.net?subject=Speaking%20inquiry"><i class="fa-solid fa-envelope" aria-hidden="true"></i>booking@johnnyxmas.net</a></li></ul></div></section> <section id="media-presentations" class="win"><div class="win-bar"><span class="win-close" aria-hidden="true"></span> <h2 class="win-title">Media and Presentations</h2></div> <div class="win-body"><ul class="link-list"><!--[--><li><a href="/speaking/"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i>Speaking: Talks and Booking</a></li><li><a href="https://drive.google.com/drive/folders/1b5VjAcYUbHaZuLsWK5a_RkZiYffqUUOw?usp=sharing" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-chalkboard" aria-hidden="true"></i>Presentation Decks</a></li><li><a href="/media-coverage/"><i class="fa-solid fa-clapperboard" aria-hidden="true"></i>Media Coverage</a></li><!--]--></ul></div></section> <section id="contact-me" class="win"><div class="win-bar"><span class="win-close" aria-hidden="true"></span> <h2 class="win-title">Contact Me</h2></div> <div class="win-body"><ul class="link-list"><!--[--><li><a href="mailto:booking@johnnyxmas.net?subject=Speaking%20inquiry"><i class="fa-solid fa-envelope" aria-hidden="true"></i>booking@johnnyxmas.net</a></li><li><a href="https://signal.group/#CjQKIGgT30VMU-FHAPM2TOqRKheN0mmwdQVSCC223V_aBM7xEhBWua03Mj5NxlAoG7AhYGxO" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-comment" aria-hidden="true"></i>Signal</a></li><li><a href="https://t.me/j0hnnyxm4s" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i>Telegram</a></li><li><a href="https://keybase.io/j0hnnyxm4s" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-lock" aria-hidden="true"></i>PGP Key</a></li><!--]--></ul></div></section> <section id="social-media" class="win"><div class="win-bar"><span class="win-close" aria-hidden="true"></span> <h2 class="win-title">Social Media</h2></div> <div class="win-body"><ul class="link-grid"><!--[--><li><a href="https://twitter.com/J0hnnyXm4s" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i>Twitter</a></li><li><a href="https://www.youtube.com/johnnyxmas" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube" aria-hidden="true"></i>YouTube</a></li><li><a href="https://www.instagram.com/j0hnnyxm4s/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i>Instagram</a></li><li><a href="https://www.linkedin.com/in/johnnyxmas/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>LinkedIn</a></li><li><a href="https://infosec.exchange/@j0hnnyxm4s" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-mastodon" aria-hidden="true"></i>Mastodon</a></li><li><a href="https://bsky.app/profile/j0hnnyxm4s.bsky.social" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-bluesky" aria-hidden="true"></i>Bluesky</a></li><li><a href="https://twitch.tv/j0hnnyxm4s" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-twitch" aria-hidden="true"></i>Twitch</a></li><!--]--></ul></div></section> <section id="podcasts" class="win"><div class="win-bar"><span class="win-close" aria-hidden="true"></span> <h2 class="win-title">Podcasts</h2></div> <div class="win-body"><ul class="link-list"><!--[--><li><a href="https://igot.one" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-headphones" aria-hidden="true"></i>"I Got One" Improv Entrepreneur Podcast</a></li><!--]--></ul></div></section></div> <footer class="desk-footer"><span class="shutdown">Special ▶ Shut Down</span> <p>© 2026 Johnny Xmas</p> <p>Built with <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer">Svelte</a>.</p></footer></main><!--]--></div>
+    <div id="app"><!--[--><nav class="menubar" aria-label="Sections"><a class="menubar-apple" aria-hidden="false" href="/" title="Home"><svg viewBox="0 0 20 24" width="13" height="16" fill="currentColor" role="presentation"><path d="M13.4 6.3c1.4 0 2.9.7 3.9 1.9-3.4 2.1-2.9 7 .8 8.3-.8 2.2-2.7 5.1-4.3 5.1-1.1 0-1.6-.7-2.9-.7s-1.9.7-2.9.7c-1.9 0-4.9-4.4-4.9-8.1 0-4 2.5-6 4.9-6 1.3 0 2.3.8 3.1.8.7 0 1.9-.9 2.3-.9z"></path><path d="M13.1 0c.2 1.8-1.1 3.8-2.9 4C10 2.2 11.5.3 13.1 0z"></path></svg></a> <a class="menubar-item" href="/">← Home</a> <a class="menubar-item" href="/speaking/">Speaking</a> <button type="button" class="menubar-theme" title="Theme: matching system (currently light)" aria-label="Theme: matching system (currently light). Click to change."><i class="fa-solid fa-circle-half-stroke svelte-1mozb9g" aria-hidden="true"></i></button> <span class="menubar-clock"></span></nav> <main class="desktop error-desktop svelte-1mozb9g"><h1 class="sr-only svelte-1mozb9g">404 — page not found</h1> <div class="alert-stack svelte-1mozb9g"><!--[--><!--]--> <div class="alert svelte-1mozb9g" style="--i: 0" role="alertdialog" aria-labelledby="alert-heading"><div class="alert-body svelte-1mozb9g"><span class="alert-icon svelte-1mozb9g" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" shape-rendering="crispEdges" role="presentation"><path d="M16 2 L30 28 L2 28 Z" fill="none" stroke="currentColor" stroke-width="2"></path><rect x="15" y="11" width="2" height="9" fill="currentColor"></rect><rect x="15" y="22" width="2" height="2" fill="currentColor"></rect></svg></span> <div class="alert-text"><p class="alert-heading svelte-1mozb9g" id="alert-heading">The page “you asked for” could not be found.</p> <p class="alert-note svelte-1mozb9g">It may have been renamed, deleted, or moved to a server I no longer have credentials for.</p></div></div> <div class="alert-buttons svelte-1mozb9g"><!--[0--><button type="button" class="alert-button svelte-1mozb9g">Cancel</button><!--]--> <a class="alert-button alert-default svelte-1mozb9g" href="/">Go Home</a></div></div></div> <p class="error-hint svelte-1mozb9g">Or try <a href="/speaking/" class="svelte-1mozb9g">Speaking</a> · <a href="/media-coverage/" class="svelte-1mozb9g">Media Coverage</a></p></main><!--]--></div>
   </body>
 </html>
