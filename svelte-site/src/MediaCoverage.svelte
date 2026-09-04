@@ -102,7 +102,8 @@
     { date: '2016-07', name: 'Bradley Barth', outlet: 'SC Magazine', links: [
       'https://www.scworld.com/news/tsa-master-key-hackers-expose-dangers-of-physical-and-digital-key-escrow-policies'
     ] },
-    { name: "MatPat's Game Lab", outlet: 'YouTube, s01e07 — "Are YOU Being Hacked?"', note: 'Brought in as one of two professional hackers to break into a major media company on camera, for the Watch_Dogs 2 promo episode.', links: [
+    { date: '2016-07-13', name: "MatPat's Game Lab", outlet: 'S01E07 — "Are YOU Being HACKED? (Watch Dogs 2)"', note: 'Brought in as one of the two professional hackers who train the cast to break into a media company on camera.', links: [
+      'https://www.imdb.com/title/tt5812046/',
       'https://www.youtube.com/watch?v=cS1oJhMUlqA'
     ] },
     { name: 'Authority Magazine', outlet: '"The 5 Things Every American Business Leader Should Do To Shield Themselves From A Cyberattack"', links: [

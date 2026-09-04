@@ -245,8 +245,9 @@
       <p class="win-prose">
         I keynote and present at security conferences worldwide on offensive
         security, penetration testing, OT and industrial control systems, and
-        the human failures underneath all of it — DefCamp, HOPE, Hackfest,
-        GrrCON, THOTCON, CypherCon, BSides and the ManuSec Summit, among others.
+        the human failures underneath all of it — DEF CON, HOPE, DefCamp,
+        DerbyCon, GrrCON, THOTCON, CypherCon, Hackfest, BSides and the ManuSec
+        Summit, among others.
       </p>
       <ul class="link-list">
         <li>

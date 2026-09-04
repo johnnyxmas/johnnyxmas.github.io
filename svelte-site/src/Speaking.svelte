@@ -208,10 +208,10 @@
       <div class="prose">
         <p>
           Johnny Xmas is a hacker, offensive security leader and international
-          conference speaker. He has keynoted and presented at DefCamp, HOPE,
-          Hackfest, GrrCON, THOTCON, CypherCon, BSides and the ManuSec Summit,
-          on stages from Chicago to Bucharest, and has been interviewed on the
-          subject by Fox, NBC, Wired, TechCrunch and ZDNet.
+          conference speaker. He has keynoted and presented at DEF CON, HOPE,
+          DefCamp, DerbyCon, GrrCON, THOTCON, CypherCon, Hackfest, BSides and
+          the ManuSec Summit, on stages from Chicago to Bucharest, and has been
+          interviewed on the subject by Fox, NBC, Wired, TechCrunch and ZDNet.
         </p>
         <p>
           He speaks to security practitioners, executive audiences and general
@@ -274,6 +274,10 @@
       <h2 class="win-title">Where I've Spoken</h2>
     </div>
     <div class="win-body">
+      <p class="win-prose">
+        Not a complete history — only the talks there's a recording of.
+        Twenty-plus years of conferences leaves a lot of rooms undocumented.
+      </p>
       <ul class="stage-list">
         {#each appearances as a}
           <li class="stage">
