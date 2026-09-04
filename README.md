@@ -1,174 +1,91 @@
 # johnnyxmas.net
 
-Personal site for Johnny Xmas — a single-page link hub styled as a **System 6 Macintosh desktop**: 1-bit black-on-white windows, striped title bars, and a dithered grey desktop. Svelte 5 + Vite, no CSS framework, served by GitHub Pages.
+Johnny Xmas's personal site, styled as a System 6 Macintosh desktop — 1-bit windows, striped title bars, dithered grey background. Svelte 5 + Vite, no CSS framework, hosted on GitHub Pages.
+
+Three pages: the homepage, `/speaking/` (talks, stages, booking), and `/media-coverage/` (press).
 
 Live at **[johnnyxmas.net](https://johnnyxmas.net)**.
 
----
-
-## Quick start
+## Running it
 
 ```bash
 cd svelte-site
 npm install
-npm run dev        # http://localhost:5173
+npm run dev
 ```
 
-Other scripts (all from `svelte-site/`):
+No tests, no linter.
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Dev server with hot reload |
-| `npm run build` | Production build into `svelte-site/dist/` |
-| `npm run preview` | Serve the production build locally |
-| `npm run prerender` | SSR-build the components and inject their HTML into `dist/` |
-| `npm run deploy` | Build, prerender, sitemap, then generate `404.html` in `dist/` |
-| `npm run sync` | **Build and publish to the repo root** — the one you want |
+## Deploying — read this part
 
-There are no tests or linters configured.
-
----
-
-## Editing the content
-
-Almost every routine change is a one-line edit to an array near the top of **`svelte-site/src/App.svelte`**. Each entry is `{ href, icon, text }`, and the page renders them with `{#each}` blocks — add, remove, or reorder freely.
-
-| Array | Window it fills |
-| --- | --- |
-| `mediaLinks` | Media and Presentations |
-| `contactLinks` | Contact Me |
-| `socialLinks` | Social Media (renders as a grid, not a list) |
-| `podcastLinks` | Podcasts |
-| `supportLinks` | Support Me |
-| `menus` | The menu bar at the top — anchor links to the sections |
-
-`icon` is a [Font Awesome 6](https://fontawesome.com/icons) class string, e.g. `"fa-brands fa-twitch"` or `"fa-solid fa-lock"`. Only the **solid** and **brands** sets are loaded.
-
-To add a whole new section, copy an existing `<section class="win">` block and give it a unique `id`, then add a matching entry to `menus`.
-
----
-
-## Deploying
-
-> **GitHub Pages serves from the repo root of `main`. There is no deploy workflow.**
-> The only file in `.github/workflows/` is `workflow-drift-detection.yml`, a scheduled security check — it does not build anything.
-
-This means a source change is **not live until the build output at the repo root is regenerated**. One command does it:
+**GitHub Pages serves from the repo root of `main`, and nothing builds automatically.** The only workflow in `.github/workflows/` is a scheduled security check. So a change under `svelte-site/src/` is not live until the build output at the repo root is regenerated and committed:
 
 ```bash
 cd svelte-site && npm run sync
 cd .. && git add -A && git commit -m "Rebuild site" && git push
 ```
 
-`sync` builds, prerenders, generates `404.html`, deletes the previous hashed bundles from the root, and copies the fresh build over. Do not do those steps by hand — Vite emits a new content hash on every build, and the failure mode is quiet: copy a new build over the root without clearing the old bundles and `404.html` is left pointing at an `assets/index-<oldhash>.js` that no longer exists, so the 404 page renders blank while the homepage looks perfectly fine.
+`sync` builds, prerenders, generates `404.html`, clears the old hashed bundles out of the root, and copies the fresh build over.
 
-**Don't hand-edit `index.html`, `404.html`, `.nojekyll`, or `assets/index-*` at the repo root.** All of it is generated. The source of truth is `svelte-site/src/` for code and `svelte-site/public/` for static files.
+Don't do those steps by hand. Vite emits a new content hash every build, and skipping the cleanup fails quietly: `404.html` ends up pointing at an `assets/index-<oldhash>.js` that's gone, so the 404 page renders blank while the homepage looks perfectly fine.
+
+**Everything at the repo root is generated** — `index.html`, `404.html`, `assets/`, the favicons, `CNAME`, `.nojekyll`. Never edit any of it. Source of truth is `svelte-site/src/` for code and `svelte-site/public/` for static files, including the custom domain in `public/CNAME`.
+
+## Editing content
+
+Most changes are one line in an array near the top of a component:
+
+- **`src/App.svelte`** — `mediaLinks`, `contactLinks`, `socialLinks`, `podcastLinks`, `menus`. Each entry is `{ href, icon, text }`.
+- **`src/lib/stages.js`** — the speaking record. `appearances` is the detailed list on `/speaking/`; `conWall` is the shelf of con names. The wall is intentionally broader than the list: `appearances` only covers talks there's a recording of, so don't "reconcile" the two.
+- **`src/Speaking.svelte`** — the talk catalogue, with abstracts.
+- **`src/MediaCoverage.svelte`** — press items, each with an ISO date so sections sort newest-first.
+
+`icon` is a [Font Awesome 6](https://fontawesome.com/icons) class. Only **solid** and **brands** are loaded.
+
+Crawler-facing metadata (title, description, canonical, OG/Twitter, JSON-LD) lives in each page's `index.html`, not in `<svelte:head>` — scrapers don't run JS. The canonical `Person` node is in the root `index.html` and the other two pages reference it by `@id`.
 
 ## Prerendering
 
-The pages are Svelte apps that render client-side, so the built HTML used to
-ship an empty `<div id="app"></div>`. Google executes JS and would index it
-eventually; most other crawlers — including the LLM ones that increasingly
-drive referrals — do not, so the talk abstracts and the appearance list were
-invisible to them.
+The pages render client-side, so the built HTML used to ship an empty `<div id="app"></div>`. Google executes JS and gets there eventually; most other crawlers, including the LLM ones, don't — which made the talk abstracts and the appearance list invisible to them.
 
-`npm run prerender` fixes that in two steps:
+`npm run prerender` SSR-builds the same components into `dist-ssr/` (git-ignored, never deployed), then `scripts/prerender.js` renders each one and injects the markup into `dist/`, `<svelte:head>` included. The client hydrates that markup instead of replacing it: `src/lib/boot.js` picks `hydrate()` when the container has children, `mount()` when it doesn't, so `vite dev` still works.
 
-1. `vite build --config vite.config.ssr.js` compiles the same components for
-   Node into `dist-ssr/` (git-ignored, never deployed).
-2. `scripts/prerender.js` calls `render()` on each one and injects the markup
-   into the matching file in `dist/`, `<svelte:head>` content included.
+Two things that'll bite you:
 
-The client then **hydrates** that markup rather than replacing it — see
-`src/lib/boot.js`, which picks `hydrate()` when the container already has
-children and `mount()` when it doesn't, so `vite dev` still works against an
-empty container.
+- **`src/entry-server.js` re-exports `render` from `svelte/server`, and the prerender script uses that one.** The SSR bundle inlines its own copy of Svelte's internals, so a `render()` imported separately from `node_modules` is a different module instance and dies with `Cannot read properties of null (reading 'r')`.
+- **The script matches the literal `<div id="app"></div>` and exits non-zero if a page lacks it.** That's on purpose — a changed template should break the build instead of quietly shipping an unprerendered page.
 
-Two things to know if you touch this:
+## Styling
 
-- `src/entry-server.js` re-exports `render` from `svelte/server`, and
-  `scripts/prerender.js` uses *that* one. The SSR bundle inlines its own copy
-  of Svelte's internals; a `render()` imported separately from `node_modules`
-  is a different module instance and fails with `Cannot read properties of
-  null (reading 'r')`.
-- The prerender script matches the literal string `<div id="app"></div>` and
-  exits non-zero if a page doesn't contain it. That's deliberate: a changed
-  template should break the build rather than quietly ship an unprerendered
-  page.
+All in **`src/app.css`**, ~670 lines, no framework. Every color is a token at the top of the file; nothing hardcodes ink or paper elsewhere.
 
-That includes `CNAME` and `.nojekyll`: the copies at the repo root are build output, reproduced from `svelte-site/public/` on every build. To change the custom domain, edit **`svelte-site/public/CNAME`** and run `npm run sync` — there is nothing to keep manually in sync.
+Light is the default. Dark mode is a separate charcoal palette rather than an inverted one, following the OS preference unless the menu-bar toggle overrides it via `[data-theme]` on `<html>` (see `src/lib/theme.js`). Both `index.html` files apply a stored override before paint so there's no flash.
 
----
+Reusable pieces: **`.win`** (the window chrome), **`.link-list`** / **`.link-grid`** (hover inverts, the way System 6 drew selection), **`.menubar`** (real navigation, not decoration), **`.con-wall`** (the con name chips).
+
+Two more traps:
+
+1. **The desktop dither uses 2px squares, not 1px.** A true 1px checkerboard is more accurate but moirés into a visible cyan cast on HiDPI displays. Don't "fix" it without looking at a real screen.
+2. **`.win` carries `scroll-margin-top`.** Without it, menu-bar anchor jumps land with the section's title bar hidden under the fixed menu bar.
+
+Fonts and Font Awesome load from CDN in each component's `<svelte:head>`: **Silkscreen** for all chrome, **IBM Plex Sans** for body text. There's deliberately no Bootstrap — the markup used to load Bootstrap 5 while using Bootstrap 3 class names, so ~60 KB was being fetched to style nothing.
 
 ## The video
 
-The deployed file is **320×240, ~6.7 MB** — deliberately low-resolution, to match the retro framing.
+The deployed file is 320×240, ~6.7 MB — deliberately low-res to match the framing. It autoplays muted (browsers insist); the speaker button unmutes it.
 
-The full-resolution edit master is **not kept in this repo**. Video masters are large enough to be a real problem in git (GitHub warns at 50 MB, rejects at 100 MB, and a committed blob that size can't be removed without rewriting history), so `svelte-site/.gitignore` blocks `src/assets/*.mkv` and `*.mov` to stop one being added by accident. Keep your master wherever you keep your footage.
+The edit master is **not in this repo**. Masters are big enough to be a real problem in git — GitHub warns at 50 MB, rejects at 100 MB, and a committed blob that size needs a history rewrite to remove — so `svelte-site/.gitignore` blocks `src/assets/*.mkv` and `*.mov`. Keep yours wherever you keep footage.
 
-To regenerate the deployed video from a new 1920×1080 master:
+To regenerate from a new 1920×1080 master:
 
 ```bash
-ffmpeg -i /path/to/your/master.mkv \
+ffmpeg -i /path/to/master.mkv \
   -vf "crop=1440:1080:240:0,scale=320:240:flags=bicubic" \
   -c:v libx264 -profile:v main -preset slow -crf 26 -pix_fmt yuv420p -r 24 \
   -c:a aac -b:a 96k -ac 2 -movflags +faststart \
   svelte-site/public/assets/vid/jtv.mp4
 ```
 
-- `crop=1440:1080:240:0` takes a centered 4:3 window out of a 16:9 master, so the movie window has no letterbox bars. Adjust the `240` x-offset to shift the crop left or right.
-- `+faststart` moves the moov atom to the front so playback starts before the file finishes downloading.
-- Raise `-crf` for a smaller file, lower it for better quality. 26 is a good balance at this resolution.
+`crop=1440:1080:240:0` pulls a centered 4:3 window out of a 16:9 master so there are no letterbox bars — adjust the `240` to shift it. `+faststart` moves the moov atom up front so playback starts before the download finishes. Raise `-crf` for a smaller file; 26 is a good balance here.
 
-After regenerating, rebuild and copy to the repo root (see [Deploying](#deploying)) — `public/` is only the build input.
-
-The video autoplays muted (browsers require this); the speaker button in the movie window's control strip unmutes it.
-
----
-
-## How the styling works
-
-All of it lives in **`svelte-site/src/app.css`** — roughly 400 lines, no framework, no build-time CSS tooling.
-
-The palette is genuinely two colors, `--ink` (`#000`) and `--paper` (`#fff`), plus a dither between them. Everything else is a named token at the top of the file. The design is **deliberately single-theme** — there is no dark mode, and every color is painted explicitly rather than inherited.
-
-Reusable pieces:
-
-- **`.win`** — a Mac window: 2px black border, striped title bar, close box, hard offset drop shadow. Used for every section.
-- **`.link-list`** / **`.link-grid`** — the two link layouts. Hover inverts to white-on-black, the way System 6 drew selection.
-- **`.menubar`** — the fixed top bar. It's real navigation, not decoration.
-
-### Two things that will bite you
-
-1. **The desktop dither uses 2px squares, not 1px.** A true 1px checkerboard is more historically accurate but moirés into a visible cyan colour cast on scaled and HiDPI displays. Don't "fix" it back to 1px without checking on a real screen.
-2. **`.win` carries `scroll-margin-top`.** Without it, menu-bar anchor jumps land with the section's title bar hidden underneath the fixed menu bar.
-
-### Fonts and icons
-
-Loaded from CDN in the `<svelte:head>` block of `App.svelte`:
-
-- **Silkscreen** — pixel face, used for all chrome: menu bar, window titles, the name plate
-- **IBM Plex Sans** — body text and link labels
-- **Font Awesome 6.7.2** — solid + brands only
-
-There is **no Bootstrap.** It was removed deliberately: the markup had been using Bootstrap 3 `panel` classes while loading the Bootstrap 5 stylesheet, where those classes don't exist — so ~60 KB was being fetched to style nothing.
-
----
-
-## Layout
-
-```
-├── index.html, 404.html, assets/   ← generated build output (do not edit)
-├── CNAME, .nojekyll, favicons      ← also build output, from public/
-└── svelte-site/                    ← the actual source
-    ├── src/
-    │   ├── App.svelte              ← all markup + content arrays
-    │   ├── app.css                 ← all styling
-    │   └── main.js                 ← Svelte 5 mount entrypoint
-    └── public/                     ← copied verbatim into the build
-        ├── CNAME, .nojekyll         ← edit the domain HERE, not at the root
-        ├── favicons
-        └── assets/
-            ├── vid/jtv.mp4         ← deployed video
-            └── img/opengraph.jpg   ← social share card
-```
+Then run `npm run sync` — `public/` is only build input.
