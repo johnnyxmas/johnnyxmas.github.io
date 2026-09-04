@@ -40,7 +40,13 @@
     tick();
     clockTimer = setInterval(tick, 15000);
 
-    path = window.location.pathname + window.location.search;
+    // Bounded hard, and the query string is dropped. This text renders
+    // inside something that looks like a real system alert, so a crafted
+    // link shouldn't be able to put an arbitrary sentence — a fake support
+    // number, say — on the page. 32 is comfortably longer than any real
+    // path here ('/media-coverage/' is 16) and too short to carry a lure.
+    const raw = window.location.pathname;
+    path = raw.length > 32 ? raw.slice(0, 32) + '…' : raw;
 
     themePreference = readStoredTheme();
     applyTheme(themePreference);

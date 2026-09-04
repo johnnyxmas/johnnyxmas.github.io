@@ -207,17 +207,16 @@
     <div class="win-body">
       <div class="prose">
         <p>
-          Johnny Xmas is a hacker, offensive security leader and international
-          conference speaker. He has keynoted and presented at DEF CON, HOPE,
-          DefCamp, DerbyCon, GrrCON, THOTCON, CypherCon, Hackfest, BSides and
-          the ManuSec Summit, on stages from Chicago to Bucharest, and has been
-          interviewed on the subject by Fox, NBC, Wired, TechCrunch and ZDNet.
+          I'm Johnny Xmas — a hacker and offensive security leader. I've
+          keynoted and presented at DEF CON, HOPE, DefCamp, DerbyCon, GrrCON,
+          THOTCON, CypherCon, Hackfest, BSides and the ManuSec Summit, on
+          stages from Chicago to Bucharest, since 2004.
         </p>
         <p>
-          He speaks to security practitioners, executive audiences and general
+          I speak to security practitioners, executive audiences and general
           conference crowds alike, in sessions from a 20-minute keynote to a
-          full-day workshop, in person or remote. Talks are tailored to the
-          event — tell him the room and the outcome you want.
+          full-day workshop, in person or remote. Tell me the room and the
+          outcome you want and I'll build the talk around it.
         </p>
         <p class="booking-cta">
           <a class="button-link" href={`mailto:${BOOKING_EMAIL}?subject=Speaking%20inquiry`}>
@@ -311,8 +310,10 @@
           Cyber Training at GRIMM, infrastructure defense at Kasada, and Lead
           Researcher on Uptake's industrial cybersecurity platform. He is best
           known publicly for exposing the TSA master key leaks and the Venmo
-          public-feed privacy failures — research that has been covered by Fox,
-          NBC, Wired, TechCrunch, Engadget, PCMag and ZDNet. He holds the CISSP.
+          public-feed privacy failures — research covered by Fox, NBC, Wired,
+          TechCrunch, ZDNet, Engadget, PCMag, CSO, Vice, The Hill, Entrepreneur,
+          SC Magazine, Infosecurity Magazine and BleepingComputer, and picked up
+          by the German, Dutch and Filipino press. He holds the CISSP.
         </p>
         <p class="bio-tagline">&ldquo;I don't seek to be well-known, I seek to be worth knowing.&rdquo;</p>
       </div>
