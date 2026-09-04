@@ -58,6 +58,10 @@
     { date: '2025-09-25', name: 'Cecilia Limonta', outlet: 'ISMG / BankInfoSecurity', note: '"Offensive Security in Manufacturing: Are You Red Team Ready?" — on pentesting in OT environments, ahead of the 2025 ManuSec Summit.', links: [
       'https://www.bankinfosecurity.com/offensive-security-in-manufacturing-are-you-red-team-ready-a-29555'
     ] },
+    { date: '2024-03-18', name: 'Lauren Victory', outlet: 'CBS Chicago', note: 'Quoted on how easily the vacant Lathrop Homes complex could be entered: “There was no need to cause any damage or destruction to get in.”', links: [
+      'https://www.cbsnews.com/chicago/news/chicago-lathrop-homes-2/',
+      'https://www.youtube.com/watch?v=bmirnFXZulY'
+    ] },
     { date: '2021-09-20', name: 'Tor Constantino', outlet: 'Entrepreneur.com', links: [
       'https://www.entrepreneur.com/science-technology/5-ransomware-protection-tips-for-your-small-business/384324'
     ] },

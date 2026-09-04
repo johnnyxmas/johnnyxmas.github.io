@@ -310,7 +310,7 @@
           Cyber Training at GRIMM, infrastructure defense at Kasada, and Lead
           Researcher on Uptake's industrial cybersecurity platform. He is best
           known publicly for exposing the TSA master key leaks and the Venmo
-          public-feed privacy failures — research covered by Fox, NBC, Wired,
+          public-feed privacy failures — research covered by Fox, CBS, NBC, Wired,
           TechCrunch, ZDNet, Engadget, PCMag, CSO, Vice, The Hill, Entrepreneur,
           SC Magazine, Infosecurity Magazine and BleepingComputer, and picked up
           by the German, Dutch and Filipino press. He holds the CISSP.
