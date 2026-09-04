@@ -186,10 +186,16 @@
       </div>
       <div class="win-body">
         <div class="movie-screen">
+          <!-- muted is a static attribute, not only the property set in
+               onMount: the page is prerendered, so the browser evaluates its
+               autoplay policy against this markup during parse, before the
+               bundle runs. An autoplay <video> with no muted attribute in the
+               served HTML gets blocked. -->
           <video
             bind:this={video}
             id="main-video"
             autoplay
+            muted
             loop
             playsinline
             preload="auto"

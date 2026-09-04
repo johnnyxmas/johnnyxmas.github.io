@@ -2,7 +2,7 @@
 
 Johnny Xmas's personal site, styled as a System 6 Macintosh desktop — 1-bit windows, striped title bars, dithered grey background. Svelte 5 + Vite, no CSS framework, hosted on GitHub Pages.
 
-Three pages: the homepage, `/speaking/` (talks, stages, booking), and `/media-coverage/` (press).
+Three content pages — the homepage, `/speaking/` (talks, stages, booking), and `/media-coverage/` (press) — plus a `404.html` that's a real page rather than a copy of the homepage.
 
 Live at **[johnnyxmas.net](https://johnnyxmas.net)**.
 
@@ -25,7 +25,7 @@ cd svelte-site && npm run sync
 cd .. && git add -A && git commit -m "Rebuild site" && git push
 ```
 
-`sync` builds, prerenders, generates `404.html`, clears the old hashed bundles out of the root, and copies the fresh build over.
+`sync` builds all four pages (the three above plus `404.html`), prerenders them, clears the old hashed bundles out of the root, and copies the fresh build over.
 
 Don't do those steps by hand. Vite emits a new content hash every build, and skipping the cleanup fails quietly: `404.html` ends up pointing at an `assets/index-<oldhash>.js` that's gone, so the 404 page renders blank while the homepage looks perfectly fine.
 
