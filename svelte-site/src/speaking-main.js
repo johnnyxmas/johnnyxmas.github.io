@@ -1,9 +1,5 @@
-import { mount } from 'svelte'
 import './app.css'
+import { boot } from './lib/boot.js'
 import Speaking from './Speaking.svelte'
 
-const app = mount(Speaking, {
-  target: document.getElementById('app'),
-})
-
-export default app
+export default boot(Speaking)

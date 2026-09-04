@@ -14,4 +14,4 @@ To publish, run this and commit the result — don't do the steps by hand:
 cd svelte-site && npm run sync
 ```
 
-`sync` builds, generates `404.html`, clears the previous hashed bundles from the root, and copies the fresh build over. Clearing the old bundles is the part that matters: Vite emits a new content hash every build, and a copy that skips it leaves `404.html` referencing an `assets/index-<oldhash>.js` that no longer exists — the 404 page renders blank while the homepage still looks fine.
+`sync` builds, prerenders each page's markup into its `<div id="app">`, generates `404.html`, clears the previous hashed bundles from the root, and copies the fresh build over. Clearing the old bundles is the part that matters: Vite emits a new content hash every build, and a copy that skips it leaves `404.html` referencing an `assets/index-<oldhash>.js` that no longer exists — the 404 page renders blank while the homepage still looks fine.

@@ -21,7 +21,8 @@ Other scripts (all from `svelte-site/`):
 | `npm run dev` | Dev server with hot reload |
 | `npm run build` | Production build into `svelte-site/dist/` |
 | `npm run preview` | Serve the production build locally |
-| `npm run deploy` | Build, then generate `404.html` in `dist/` |
+| `npm run prerender` | SSR-build the components and inject their HTML into `dist/` |
+| `npm run deploy` | Build, prerender, sitemap, then generate `404.html` in `dist/` |
 | `npm run sync` | **Build and publish to the repo root** — the one you want |
 
 There are no tests or linters configured.
@@ -59,9 +60,41 @@ cd svelte-site && npm run sync
 cd .. && git add -A && git commit -m "Rebuild site" && git push
 ```
 
-`sync` builds, generates `404.html`, deletes the previous hashed bundles from the root, and copies the fresh build over. Do not do those steps by hand — Vite emits a new content hash on every build, and the failure mode is quiet: copy a new build over the root without clearing the old bundles and `404.html` is left pointing at an `assets/index-<oldhash>.js` that no longer exists, so the 404 page renders blank while the homepage looks perfectly fine.
+`sync` builds, prerenders, generates `404.html`, deletes the previous hashed bundles from the root, and copies the fresh build over. Do not do those steps by hand — Vite emits a new content hash on every build, and the failure mode is quiet: copy a new build over the root without clearing the old bundles and `404.html` is left pointing at an `assets/index-<oldhash>.js` that no longer exists, so the 404 page renders blank while the homepage looks perfectly fine.
 
 **Don't hand-edit `index.html`, `404.html`, `.nojekyll`, or `assets/index-*` at the repo root.** All of it is generated. The source of truth is `svelte-site/src/` for code and `svelte-site/public/` for static files.
+
+## Prerendering
+
+The pages are Svelte apps that render client-side, so the built HTML used to
+ship an empty `<div id="app"></div>`. Google executes JS and would index it
+eventually; most other crawlers — including the LLM ones that increasingly
+drive referrals — do not, so the talk abstracts and the appearance list were
+invisible to them.
+
+`npm run prerender` fixes that in two steps:
+
+1. `vite build --config vite.config.ssr.js` compiles the same components for
+   Node into `dist-ssr/` (git-ignored, never deployed).
+2. `scripts/prerender.js` calls `render()` on each one and injects the markup
+   into the matching file in `dist/`, `<svelte:head>` content included.
+
+The client then **hydrates** that markup rather than replacing it — see
+`src/lib/boot.js`, which picks `hydrate()` when the container already has
+children and `mount()` when it doesn't, so `vite dev` still works against an
+empty container.
+
+Two things to know if you touch this:
+
+- `src/entry-server.js` re-exports `render` from `svelte/server`, and
+  `scripts/prerender.js` uses *that* one. The SSR bundle inlines its own copy
+  of Svelte's internals; a `render()` imported separately from `node_modules`
+  is a different module instance and fails with `Cannot read properties of
+  null (reading 'r')`.
+- The prerender script matches the literal string `<div id="app"></div>` and
+  exits non-zero if a page doesn't contain it. That's deliberate: a changed
+  template should break the build rather than quietly ship an unprerendered
+  page.
 
 That includes `CNAME` and `.nojekyll`: the copies at the repo root are build output, reproduced from `svelte-site/public/` on every build. To change the custom domain, edit **`svelte-site/public/CNAME`** and run `npm run sync` — there is nothing to keep manually in sync.
 

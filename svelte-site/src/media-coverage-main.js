@@ -1,9 +1,5 @@
-import { mount } from 'svelte'
 import './app.css'
+import { boot } from './lib/boot.js'
 import MediaCoverage from './MediaCoverage.svelte'
 
-const app = mount(MediaCoverage, {
-  target: document.getElementById('app'),
-})
-
-export default app
+export default boot(MediaCoverage)

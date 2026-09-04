@@ -26,3 +26,4 @@ dist-ssr
 # Large video sources (edit masters, not deployed)
 src/assets/*.mkv
 src/assets/*.mov
+dist-ssr/
