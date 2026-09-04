@@ -127,10 +127,10 @@
   ];
 
   const menus = [
+    { href: '#bio', text: 'Bio' },
     { href: '#booking', text: 'Booking' },
     { href: '#talks', text: 'Talks' },
-    { href: '#appearances', text: 'Stages' },
-    { href: '#bio', text: 'Bio' }
+    { href: '#appearances', text: 'Stages' }
   ];
 </script>
 
@@ -199,6 +199,37 @@
     </div>
   </section>
 
+  <section id="bio" class="win">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">Speaker Bio</h2>
+    </div>
+    <div class="win-body">
+      <div class="prose">
+        <p>
+          Johnny Xmas serves as Global Head of Offensive Security for a Fortune 200
+          manufacturing and agriculture corporation, leading penetration testing,
+          red teaming, adversarial simulation and exposure assessment. With more
+          than 16 years in information security and 26 in IT operations, his work
+          centers on the gap between what an organization claims it can detect and
+          what it actually detects.
+        </p>
+        <p>
+          A fixture of the Chicago security community since 2002, he holds board
+          positions at BurbSec and BSides312. Earlier roles include Director of
+          Cyber Training at GRIMM, infrastructure defense at Kasada, and Lead
+          Researcher on Uptake's industrial cybersecurity platform. He is best
+          known publicly for exposing the TSA master key leaks and the Venmo
+          public-feed privacy failures — research covered by Fox, CBS, NBC, Wired,
+          TechCrunch, ZDNet, Engadget, PCMag, CSO, Vice, The Hill, Entrepreneur,
+          SC Magazine, Infosecurity Magazine and BleepingComputer, and picked up
+          by the German, Dutch and Filipino press. He holds the CISSP.
+        </p>
+        <p class="bio-tagline">&ldquo;I don't seek to be well-known, I seek to be worth knowing.&rdquo;</p>
+      </div>
+    </div>
+  </section>
+
   <section id="booking" class="win">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
@@ -206,12 +237,6 @@
     </div>
     <div class="win-body">
       <div class="prose">
-        <p>
-          I'm Johnny Xmas — a hacker and offensive security leader. I've
-          keynoted and presented at DEF CON, HOPE, DefCamp, DerbyCon, GrrCON,
-          THOTCON, CypherCon, Hackfest, BSides and the ManuSec Summit, on
-          stages from Chicago to Bucharest, since 2004.
-        </p>
         <p>
           I speak to security practitioners, executive audiences and general
           conference crowds alike, in sessions from a 20-minute keynote to a
@@ -286,37 +311,6 @@
           </li>
         {/each}
       </ul>
-    </div>
-  </section>
-
-  <section id="bio" class="win">
-    <div class="win-bar">
-      <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">Speaker Bio</h2>
-    </div>
-    <div class="win-body">
-      <div class="prose">
-        <p>
-          Johnny Xmas serves as Global Head of Offensive Security for a Fortune 200
-          manufacturing and agriculture corporation, leading penetration testing,
-          red teaming, adversarial simulation and exposure assessment. With more
-          than 16 years in information security and 26 in IT operations, his work
-          centers on the gap between what an organization claims it can detect and
-          what it actually detects.
-        </p>
-        <p>
-          A fixture of the Chicago security community since 2002, he holds board
-          positions at BurbSec and BSides312. Earlier roles include Director of
-          Cyber Training at GRIMM, infrastructure defense at Kasada, and Lead
-          Researcher on Uptake's industrial cybersecurity platform. He is best
-          known publicly for exposing the TSA master key leaks and the Venmo
-          public-feed privacy failures — research covered by Fox, CBS, NBC, Wired,
-          TechCrunch, ZDNet, Engadget, PCMag, CSO, Vice, The Hill, Entrepreneur,
-          SC Magazine, Infosecurity Magazine and BleepingComputer, and picked up
-          by the German, Dutch and Filipino press. He holds the CISSP.
-        </p>
-        <p class="bio-tagline">&ldquo;I don't seek to be well-known, I seek to be worth knowing.&rdquo;</p>
-      </div>
     </div>
   </section>
 
