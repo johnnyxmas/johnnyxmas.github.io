@@ -102,6 +102,9 @@
     { date: '2016-07', name: 'Bradley Barth', outlet: 'SC Magazine', links: [
       'https://www.scworld.com/news/tsa-master-key-hackers-expose-dangers-of-physical-and-digital-key-escrow-policies'
     ] },
+    { name: "MatPat's Game Lab", outlet: 'YouTube, s01e07 — "Are YOU Being Hacked?"', note: 'Brought in as one of two professional hackers to break into a major media company on camera, for the Watch_Dogs 2 promo episode.', links: [
+      'https://www.youtube.com/watch?v=cS1oJhMUlqA'
+    ] },
     { name: 'Authority Magazine', outlet: '"The 5 Things Every American Business Leader Should Do To Shield Themselves From A Cyberattack"', links: [
       'https://medium.com/authority-magazine/cyber-defense-antonio-johnny-martinelli-of-grimm-on-the-5-things-every-american-business-leader-c33742d0da89'
     ] }

@@ -65,6 +65,16 @@
       tags: ['OT security', 'ICS', 'penetration testing']
     },
     {
+      title: 'Couch to Compromise: How to Hack (and Defend) Large Companies',
+      abstract: 'A candid, step-by-step walkthrough of the attack chain used to compromise a large enterprise — every piece of low-hanging fruit, why each one works, and what to do about it. Attendees leave with actions they can take on Monday that raise their security posture with little to no budget, make future penetration tests more cost-effective by removing the cheap shots, and, incidentally, with the ability to become domain admin of an average corporation from their couch.',
+      tags: ['red teaming', 'enterprise security', 'attack chains']
+    },
+    {
+      title: 'Artificial Intelligence, Real Threats',
+      abstract: 'AI has transcended buzzword status into a potent and accessible tool, and that power cuts both ways. A look at the darker side: how adversaries actually harness AI in sophisticated information security attacks, what that changes about social engineering and enterprise compromise, and which defensive strategies keep you ahead of it.',
+      tags: ['AI security', 'social engineering', 'threat landscape']
+    },
+    {
       title: '5 Lies Enterprise Security Still Tells Itself',
       abstract: 'Expired risk acceptances that quietly became policy, asset inventories nobody maintains, an identity perimeter held together with exceptions, vendor risk theater, and expensive controls that detect nothing. Five systemic enterprise security failures, and what to change on Monday.',
       tags: ['security governance', 'risk', 'CISO']
@@ -91,7 +101,7 @@
     },
     {
       title: "Saving Ryan's Privates",
-      abstract: 'Intimate photos get stolen from people with strong passwords and two-factor authentication turned on. The privacy myths that fail, the methods actually used to take this material, and the protections that hold up. A talk for general audiences as much as security teams.',
+      abstract: 'Despite strong passwords and MFA, the world\u2019s most private digital assets are still being stolen and leaked. Exposes the privacy myths that fail, the methods actually used to take this material, and actionable steps to reclaim control. Works for general audiences as well as security teams.',
       tags: ['privacy', 'security awareness']
     },
     {
