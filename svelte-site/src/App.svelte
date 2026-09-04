@@ -102,7 +102,6 @@
   ];
 
   const mediaLinks = [
-    { href: "/speaking/", icon: "fa-solid fa-microphone-lines", text: "Speaking: Talks and Booking" },
     { href: "https://drive.google.com/drive/folders/1b5VjAcYUbHaZuLsWK5a_RkZiYffqUUOw?usp=sharing", icon: "fa-solid fa-chalkboard", text: "Presentation Decks" },
     { href: "/media-coverage/", icon: "fa-solid fa-clapperboard", text: "Media Coverage" }
   ];
@@ -249,22 +248,14 @@
     </div>
     <div class="win-body">
       <p class="win-prose">
-        I'm Johnny Xmas. I keynote and present at security conferences
-        worldwide on offensive security, penetration testing, OT and
-        industrial control systems, and
-        the human failures underneath all of it — DEF CON, HOPE, DefCamp,
-        DerbyCon, GrrCON, THOTCON, CypherCon, Hackfest, BSides and the ManuSec
-        Summit, among others.
+        I'm Johnny Xmas. I keynote at security conferences worldwide on
+        offensive security, penetration testing, OT and industrial control
+        systems, and the human failures underneath all of it.
       </p>
       <ul class="link-list">
         <li>
           <a href="/speaking/">
             <i class="fa-solid fa-microphone-lines" aria-hidden="true"></i>Talks, stages and booking
-          </a>
-        </li>
-        <li>
-          <a href="mailto:booking@johnnyxmas.net?subject=Speaking%20inquiry">
-            <i class="fa-solid fa-envelope" aria-hidden="true"></i>booking@johnnyxmas.net
           </a>
         </li>
       </ul>
