@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import './app.css';
   import { readStoredTheme, applyTheme, storeTheme, nextTheme, themeIconFor, themeLabelFor } from './lib/theme.js';
+  import { conWall } from './lib/stages.js';
 
   let video;
   let isMuted = $state(true);
@@ -110,18 +111,12 @@
     { href: "https://igot.one", icon: "fa-solid fa-headphones", text: '"I Got One" Improv Entrepreneur Podcast' }
   ];
 
-  const supportLinks = [
-    { href: "https://venmo.com/johnny-xmas", icon: "fa-solid fa-dollar-sign", text: "Venmo" },
-    { href: "https://www.paypal.com/paypalme/johnnyxmas", icon: "fa-brands fa-paypal", text: "PayPal" }
-  ];
-
   const menus = [
     { href: "/speaking/", text: "Speaking" },
     { href: "#media-presentations", text: "Media" },
     { href: "#contact-me", text: "Contact" },
     { href: "#social-media", text: "Social" },
-    { href: "#podcasts", text: "Podcasts" },
-    { href: "#support-me", text: "Support" }
+    { href: "#podcasts", text: "Podcasts" }
   ];
 </script>
 
@@ -166,48 +161,75 @@
 
 <main class="desktop">
 
-  <!-- The video, presented as a movie window on the desktop -->
-  <section class="win movie">
+  <!-- Nameplate first in source order so the name and the pitch lead on
+       narrow screens; the movie window sits beside it once there is room. -->
+  <div class="hero">
+    <div class="nameplate">
+      <h1 class="profile-title">@johnnyxmas</h1>
+      <p class="profile-description">My other computer is your computer.</p>
+      <!-- The joke is the personality; this line is what an event organizer
+           and a crawler are both actually looking for. -->
+      <p class="profile-role">
+        Hacker &middot; Global Head of Offensive Security &middot;
+        International keynote speaker
+      </p>
+      <p class="nameplate-cta">
+        <a href="/speaking/"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i>Speaking &amp; booking</a>
+      </p>
+    </div>
+
+    <!-- The video, presented as a movie window on the desktop -->
+    <section class="win movie">
+      <div class="win-bar">
+        <span class="win-close" aria-hidden="true"></span>
+        <h2 class="win-title">jtv.mp4</h2>
+      </div>
+      <div class="win-body">
+        <div class="movie-screen">
+          <video
+            bind:this={video}
+            id="main-video"
+            autoplay
+            loop
+            playsinline
+            preload="auto"
+            aria-label="Johnny Xmas showreel"
+            onclick={handleVideoClick}
+          >
+            <source src="/assets/vid/jtv.mp4" type="video/mp4">
+            <p>Your browser doesn't support HTML5 video. <a href="/assets/vid/jtv.mp4">Download the video</a> instead.</p>
+          </video>
+        </div>
+        <div class="movie-controls">
+          <button
+            id="mute-toggle"
+            class="mute-button"
+            title={isMuted ? 'Turn sound on' : 'Turn sound off'}
+            aria-label={isMuted ? 'Turn sound on' : 'Turn sound off'}
+            aria-pressed={!isMuted}
+            onclick={toggleMute}
+          >
+            <i class={isMuted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high'}></i>
+          </button>
+          <span class="sound-hint">{isMuted ? 'Click for sound' : 'Sound on'}</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="win" aria-label="Conferences spoken at">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">jtv.mp4</h2>
+      <h2 class="win-title">Stages Since 2004</h2>
     </div>
     <div class="win-body">
-      <div class="movie-screen">
-        <video
-          bind:this={video}
-          id="main-video"
-          autoplay
-          loop
-          playsinline
-          preload="auto"
-          aria-label="Johnny Xmas showreel"
-          onclick={handleVideoClick}
-        >
-          <source src="/assets/vid/jtv.mp4" type="video/mp4">
-          <p>Your browser doesn't support HTML5 video. <a href="/assets/vid/jtv.mp4">Download the video</a> instead.</p>
-        </video>
-      </div>
-      <div class="movie-controls">
-        <button
-          id="mute-toggle"
-          class="mute-button"
-          title={isMuted ? 'Turn sound on' : 'Turn sound off'}
-          aria-label={isMuted ? 'Turn sound on' : 'Turn sound off'}
-          aria-pressed={!isMuted}
-          onclick={toggleMute}
-        >
-          <i class={isMuted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high'}></i>
-        </button>
-        <span class="sound-hint">{isMuted ? 'Click for sound' : 'Sound on'}</span>
-      </div>
+      <ul class="con-wall">
+        {#each conWall as con}
+          <li>{con}</li>
+        {/each}
+      </ul>
     </div>
   </section>
-
-  <div class="nameplate">
-    <h1 class="profile-title">@johnnyxmas</h1>
-    <p class="profile-description">My other computer is your computer.</p>
-  </div>
 
   <div class="win-grid">
 
@@ -303,24 +325,6 @@
     <div class="win-body">
       <ul class="link-list">
         {#each podcastLinks as link}
-          <li>
-            <a href={link.href} target="_blank" rel="noopener noreferrer">
-              <i class={link.icon} aria-hidden="true"></i>{link.text}
-            </a>
-          </li>
-        {/each}
-      </ul>
-    </div>
-  </section>
-
-  <section id="support-me" class="win">
-    <div class="win-bar">
-      <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">Support Me</h2>
-    </div>
-    <div class="win-body">
-      <ul class="link-list">
-        {#each supportLinks as link}
           <li>
             <a href={link.href} target="_blank" rel="noopener noreferrer">
               <i class={link.icon} aria-hidden="true"></i>{link.text}

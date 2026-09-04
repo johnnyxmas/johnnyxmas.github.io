@@ -323,6 +323,61 @@ a.menubar-apple:focus-visible {
 }
 
 /* ------------------------------------------------------------
+   Hero — the nameplate leads, with the movie window alongside it
+   once the desktop is wide enough. Below that breakpoint they
+   stack in source order, so the name and pitch come first rather
+   than sitting under a 4:3 video.
+   ------------------------------------------------------------ */
+.hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+@media (min-width: 860px) {
+  .hero {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .hero .nameplate {
+    flex: 1 1 auto;
+    text-align: left;
+  }
+  /* .profile-description centers itself with margin-inline: auto, which
+     fights the left-aligned hero. Reset it here rather than there, so the
+     other pages' centered nameplates are untouched. */
+  .hero .profile-description { margin-inline: 0; }
+  .hero .movie { flex: 0 0 340px; }
+}
+
+/* ------------------------------------------------------------
+   The con wall — the speaking record as a shelf of marks. Set in
+   the pixel face so it reads as System 6 furniture rather than a
+   logo carousel, which is also why it needs no image assets.
+   ------------------------------------------------------------ */
+.con-wall {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 14px;
+  list-style: none;
+}
+
+.con-wall li {
+  padding: 6px 10px;
+  font-family: var(--pixel);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ------------------------------------------------------------
    Name plate
    ------------------------------------------------------------ */
 .nameplate {
@@ -333,6 +388,41 @@ a.menubar-apple:focus-visible {
   padding: 22px 24px;
   text-align: center;
 }
+
+/* The positioning line under the tagline: smaller than the joke,
+   but the part an event organizer is actually reading. */
+.profile-role {
+  margin: 10px 0 0;
+  font-family: var(--pixel);
+  font-size: 10px;
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.nameplate-cta { margin: 16px 0 0; }
+.nameplate-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-family: var(--pixel);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--paper);
+  border: var(--chrome) solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.nameplate-cta a:hover,
+.nameplate-cta a:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  outline: none;
+}
+.nameplate-cta a:active { transform: translate(2px, 2px); box-shadow: none; }
 
 .profile-title {
   margin: 0 0 12px;

@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import './app.css';
   import { readStoredTheme, applyTheme, storeTheme, nextTheme, themeIconFor, themeLabelFor } from './lib/theme.js';
+  import { appearances, conWall } from './lib/stages.js';
 
   const BOOKING_EMAIL = 'booking@johnnyxmas.net';
 
@@ -115,27 +116,6 @@
     }
   ];
 
-  // Verified appearances only — every entry below is drawn from a public
-  // conference schedule, archive or recording. Locations are given only
-  // where the source stated one; the rest are deliberately blank rather
-  // than guessed, because this audience knows where these cons are held.
-  const appearances = [
-    { event: 'DefCamp 2025', where: 'Bucharest, Romania', talk: 'Poisoning Pidgins in the Park' },
-    { event: 'ManuSec Summit 2025', where: 'Chicago, IL', talk: "Your OT Environment Isn't Ready for a Pentest" },
-    { event: 'Hackfest 2025', talk: 'InfoSecs and the City (panel)' },
-    { event: 'CypherCon 7.0', talk: "Saving Ryan's Privates" },
-    { event: 'HOPE 2020', where: 'Virtual', talk: 'The U.S. Maker Response to COVID-19' },
-    { event: 'THOTCON 0xA', where: 'Chicago, IL', talk: 'BurbSecCon' },
-    { event: 'The Circle of HOPE', talk: 'How to Pwn an Enterprise in 2018 (and 2019, and 2020…)' },
-    { event: 'Hackfest 2017', talk: 'How to Pwn an Enterprise in 2017 (or 2016, or 2015…)' },
-    { event: 'GrrCON 2017', talk: '10 Cent Beer Night: The World We Now Live In' },
-    { event: 'BSidesLV 2017', where: 'Las Vegas, NV', talk: 'How to Accidentally Get a Job in InfoSec' },
-    { event: 'THOTCON 0x8', where: 'Chicago, IL', talk: 'How I Darkweb Economies (and You Can Too!)' },
-    { event: 'Hackfest 2016', talk: 'How I Darkweb Economies (and You Can Too!)' },
-    { event: 'The Eleventh HOPE', talk: 'The TSA Keys Leak: Government Backdoors and the Dangers of Security Theater' },
-    { event: 'CCCamp 2019', talk: 'Unnamed Reverse Engineering podcast recording' }
-  ];
-
   const menus = [
     { href: '#booking', text: 'Booking' },
     { href: '#talks', text: 'Talks' },
@@ -194,6 +174,20 @@
       Booking: <a href={`mailto:${BOOKING_EMAIL}`}>{BOOKING_EMAIL}</a>
     </p>
   </div>
+
+  <section class="win" aria-label="Conferences spoken at">
+    <div class="win-bar">
+      <span class="win-close" aria-hidden="true"></span>
+      <h2 class="win-title">Stages Since 2004</h2>
+    </div>
+    <div class="win-body">
+      <ul class="con-wall">
+        {#each conWall as con}
+          <li>{con}</li>
+        {/each}
+      </ul>
+    </div>
+  </section>
 
   <section id="booking" class="win">
     <div class="win-bar">
@@ -267,14 +261,14 @@
   <section id="appearances" class="win">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">Stages</h2>
+      <h2 class="win-title">Where I've Spoken</h2>
     </div>
     <div class="win-body">
       <ul class="stage-list">
         {#each appearances as a}
           <li class="stage">
             <span class="stage-event">{a.event}</span>
-            {#if a.where}<span class="stage-where">{a.where}</span>{/if}
+            {#if a.year}<span class="stage-year">{a.year}</span>{/if}
             <span class="stage-talk">{a.talk}</span>
           </li>
         {/each}
@@ -321,8 +315,11 @@
 <style>
   /* Scoped here: this is the only page with running body copy and a
      three-column appearance list. Every value comes from a global token. */
+  /* Capped measure: the window itself runs to 1100px on a wide desktop,
+     and body copy at that line length is unreadable. */
   .prose {
     padding: 16px 18px;
+    max-width: 74ch;
     font-size: 15px;
     color: var(--ink-soft);
   }
@@ -381,6 +378,7 @@
 
   .talk-abstract {
     margin: 0 0 6px;
+    max-width: 78ch;
     font-size: 14px;
     color: var(--ink-soft);
   }
@@ -408,7 +406,7 @@
     font-size: 11px;
     color: var(--ink);
   }
-  .stage-where {
+  .stage-year {
     font-family: var(--pixel);
     font-size: 9px;
     letter-spacing: 0.04em;
