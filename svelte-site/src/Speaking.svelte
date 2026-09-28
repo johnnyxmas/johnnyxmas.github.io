@@ -65,6 +65,11 @@
       tags: ['OT security', 'ICS', 'penetration testing']
     },
     {
+      title: "Hacking Robots like its 1979",
+      abstract: "An introduction to Industrial Control Systems (ICS) cybersecurity: what these systems actually look like, their key components like PLCs and SCADA systems, how they differ from IT environments, and the unique security challenges they present where you can't always just reboot it, and you definitely can't just patch it.",
+      tags: ['OT security', 'ICS', 'SCADA']
+    },
+    {
       title: 'Couch to Compromise: How to Hack (and Defend) Large Companies',
       abstract: 'A candid, step-by-step walkthrough of the attack chain used to compromise a large enterprise — every piece of low-hanging fruit, why each one works, and what to do about it. Attendees leave with actions they can take on Monday that raise their security posture with little to no budget, make future penetration tests more cost-effective by removing the cheap shots, and, incidentally, with the ability to become domain admin of an average corporation from their couch.',
       tags: ['red teaming', 'enterprise security', 'attack chains']
@@ -188,7 +193,7 @@
   <section class="win" aria-label="Conferences spoken at">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">Stages Since 2004</h2>
+      <h2 class="win-title">On Stages since 2002</h2>
     </div>
     <div class="win-body">
       <ul class="con-wall">
@@ -251,23 +256,23 @@
     <div class="win-body">
       <div class="prose">
         <p>
-          Johnny Xmas serves as Global Head of Offensive Security for a Fortune 200
-          manufacturing and agriculture corporation, leading penetration testing,
-          red teaming, adversarial simulation and exposure assessment. With more
-          than 16 years in information security and 26 in IT operations, his work
-          centers on the gap between what an organization claims it can detect and
-          what it actually detects.
+          Johnny Xmas, CISSP, serves as Global Head of Offensive Security for a
+          Fortune 150 manufacturing and agriculture corporation, leading
+          penetration testing, red teaming, adversarial simulation, and exposure
+          assessment. With more than 15 years in information security and 25 in
+          IT, his work centers on identifying the gap between what should be and
+          what is.
         </p>
         <p>
           A fixture of the Chicago security community since 2002, he holds board
           positions at BurbSec and BSides312. Earlier roles include Director of
-          Cyber Training at GRIMM, infrastructure defense at Kasada, and Lead
-          Researcher on Uptake's industrial cybersecurity platform. He is best
-          known publicly for exposing the TSA master key leaks and the Venmo
-          public-feed privacy failures — research covered by Fox, CBS, NBC, Wired,
-          TechCrunch, ZDNet, Engadget, PCMag, CSO, Vice, The Hill, Entrepreneur,
-          SC Magazine, Infosecurity Magazine and BleepingComputer, and picked up
-          by the German, Dutch and Filipino press. He holds the CISSP.
+          Cyber Training, Anti-Bot Field Engineering, and Lead Researcher on an
+          industrial cybersecurity platform. He is best known publicly for
+          exposing the TSA master key leaks and the Venmo public-feed privacy
+          failures, research covered by Fox, CBS, NBC, Wired, TechCrunch, ZDNet,
+          Engadget, PCMag, CSO, Vice, The Hill, Entrepreneur, SC Magazine,
+          Infosecurity Magazine, and BleepingComputer, as well as German, Dutch,
+          and Filipino press.
         </p>
         <p class="bio-tagline">&ldquo;I don't seek to be well-known, I seek to be worth knowing.&rdquo;</p>
       </div>
@@ -299,7 +304,7 @@
     </div>
     <div class="win-body">
       <p class="win-prose">
-        Not a complete history — only the talks there's a recording of.
+        <strong>Not a complete history</strong> — only the talks there's a recording of.
         Twenty-plus years of conferences leaves a lot of rooms undocumented.
       </p>
       <ul class="stage-list">

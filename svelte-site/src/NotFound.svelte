@@ -65,8 +65,9 @@
   });
 
   // Cancelling a Mac alert in 1988 rarely got you out of anything; it got you
-  // another alert. Each Cancel stacks the next one, offset like real windows,
-  // until the last one stops offering the option.
+  // another alert. Each Cancel stacks the next one, offset like real windows.
+  // Fifteen of these are allowed to exist at once; cancelling the fifteenth
+  // is the one Cancel button in this whole site that isn't a fake-out.
   const dialogs = [
     {
       heading: 'could not be found.',
@@ -83,14 +84,66 @@
     {
       heading: 'has been reclassified.',
       body: 'Error -404. Its current location is not something I am cleared to disclose. Ask me at a conference.'
+    },
+    {
+      heading: 'has entered a retry loop.',
+      body: 'Cancel and Try Again have converged. There is currently no functional difference between the two buttons on this dialog.'
+    },
+    {
+      heading: 'is being searched for by a disk utility that does not exist.',
+      body: 'Checking… Checking… Checking. This is not a progress bar. It is just a word we like.'
+    },
+    {
+      heading: 'has triggered a Type 11 error.',
+      body: 'Type 11 errors have no documented cause and no documented fix. You are meant to just live with this now.'
+    },
+    {
+      heading: 'is being replaced by increasingly worse news.',
+      body: 'Somewhere behind this window there used to be a page. It is having a worse day than you are.'
+    },
+    {
+      heading: 'has exceeded a reasonable number of dialogs.',
+      body: 'Nine. There have been nine of these. Somebody should really be paged.'
+    },
+    {
+      heading: 'is now a memory management problem.',
+      body: 'Each dialog you cancel is a small unfreed allocation. This system will need to be restarted eventually. Possibly by you.'
+    },
+    {
+      heading: 'is a sign, not a bug.',
+      body: 'Eleven dialogs is not a technical limitation. It is a personal choice you are actively making.'
+    },
+    {
+      heading: 'has become load-bearing.',
+      body: 'Do not close this window. We are no longer sure what it is holding up, but something clearly is.'
+    },
+    {
+      heading: 'is unlucky, as advertised.',
+      body: 'Thirteen. If you were waiting for a sign to stop clicking Cancel, this was it.'
+    },
+    {
+      heading: 'is the last normal-looking dialog you will see.',
+      body: 'The next one looks different. This is your last chance to click Go Home instead.'
+    },
+    {
+      heading: 'cannot be recovered from.',
+      body: 'Cancelling this one does not produce dialog number sixteen.'
     }
   ];
 
   let depth = $state(0);
-  let atEnd = $derived(depth >= dialogs.length - 1);
+  let showDeadMac = $state(false);
 
   function cancel() {
-    if (!atEnd) depth += 1;
+    if (depth < dialogs.length - 1) {
+      depth += 1;
+    } else {
+      showDeadMac = true;
+    }
+  }
+
+  function reboot() {
+    window.location.reload();
   }
 </script>
 
@@ -128,11 +181,47 @@
 <main class="desktop error-desktop">
   <h1 class="sr-only">404 — page not found</h1>
 
-  <div class="alert-stack">
-    <!-- Every dialog cancelled so far stays on screen behind the current
-         one, offset, the way a stack of unhandled alerts used to look. -->
-    {#each dialogs.slice(0, depth) as dialog, i}
-      <div class="alert alert-buried" style="--i: {i}" aria-hidden="true">
+  {#if showDeadMac}
+    <!-- The one Cancel button on this page that wasn't a fake-out. Fifteen
+         stacked alerts is where the simulated System 6 gives up entirely. -->
+    <div class="dead-mac" role="alert">
+      <svg class="dead-mac-icon" viewBox="0 0 64 76" width="240" height="285" shape-rendering="crispEdges" role="img" aria-label="Sad Mac error screen">
+        <rect x="2" y="2" width="60" height="52" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="10" y="9" width="44" height="32" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 18 L29 27 M29 18 L20 27" stroke="currentColor" stroke-width="2"/>
+        <path d="M35 18 L44 27 M44 18 L35 27" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 35 Q32 26 44 35" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="26" y="54" width="12" height="6" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="14" y="60" width="36" height="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="6" y="64" width="52" height="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <p class="dead-mac-code">0000000F 00000003</p>
+      <p class="dead-mac-note">Fifteen dialogs was the limit. This is not a dialog.</p>
+      <button type="button" class="alert-button alert-default" onclick={reboot}>Reboot</button>
+    </div>
+  {:else}
+    <div class="alert-stack">
+      <!-- Every dialog cancelled so far stays on screen behind the current
+           one, offset, the way a stack of unhandled alerts used to look. -->
+      {#each dialogs.slice(0, depth) as dialog, i}
+        <div class="alert alert-buried" style="--i: {i}" aria-hidden="true">
+          <div class="alert-body">
+            <span class="alert-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="32" height="32" shape-rendering="crispEdges" role="presentation">
+                <path d="M16 2 L30 28 L2 28 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                <rect x="15" y="11" width="2" height="9" fill="currentColor"/>
+                <rect x="15" y="22" width="2" height="2" fill="currentColor"/>
+              </svg>
+            </span>
+            <div class="alert-text">
+              <p class="alert-heading">The page &ldquo;{path || 'you asked for'}&rdquo; {dialog.heading}</p>
+              <p class="alert-note">{dialog.body}</p>
+            </div>
+          </div>
+        </div>
+      {/each}
+
+      <div class="alert" style="--i: {depth}" role="alertdialog" aria-labelledby="alert-heading">
         <div class="alert-body">
           <span class="alert-icon" aria-hidden="true">
             <svg viewBox="0 0 32 32" width="32" height="32" shape-rendering="crispEdges" role="presentation">
@@ -142,42 +231,24 @@
             </svg>
           </span>
           <div class="alert-text">
-            <p class="alert-heading">The page &ldquo;{path || 'you asked for'}&rdquo; {dialog.heading}</p>
-            <p class="alert-note">{dialog.body}</p>
+            <p class="alert-heading" id="alert-heading">
+              The page &ldquo;{path || 'you asked for'}&rdquo; {dialogs[depth].heading}
+            </p>
+            <p class="alert-note">{dialogs[depth].body}</p>
           </div>
         </div>
-      </div>
-    {/each}
-
-    <div class="alert" style="--i: {depth}" role="alertdialog" aria-labelledby="alert-heading">
-      <div class="alert-body">
-        <span class="alert-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 32" width="32" height="32" shape-rendering="crispEdges" role="presentation">
-            <path d="M16 2 L30 28 L2 28 Z" fill="none" stroke="currentColor" stroke-width="2"/>
-            <rect x="15" y="11" width="2" height="9" fill="currentColor"/>
-            <rect x="15" y="22" width="2" height="2" fill="currentColor"/>
-          </svg>
-        </span>
-        <div class="alert-text">
-          <p class="alert-heading" id="alert-heading">
-            The page &ldquo;{path || 'you asked for'}&rdquo; {dialogs[depth].heading}
-          </p>
-          <p class="alert-note">{dialogs[depth].body}</p>
+        <div class="alert-buttons">
+          <button type="button" class="alert-button" onclick={cancel}>Cancel</button>
+          <a class="alert-button alert-default" href="/">Go Home</a>
         </div>
       </div>
-      <div class="alert-buttons">
-        {#if !atEnd}
-          <button type="button" class="alert-button" onclick={cancel}>Cancel</button>
-        {/if}
-        <a class="alert-button alert-default" href="/">Go Home</a>
-      </div>
     </div>
-  </div>
 
-  <p class="error-hint">
-    Or try <a href="/speaking/">Speaking</a> &middot;
-    <a href="/media-coverage/">Media Coverage</a>
-  </p>
+    <p class="error-hint">
+      Or try <a href="/speaking/">Speaking</a> &middot;
+      <a href="/media-coverage/">Media Coverage</a>
+    </p>
+  {/if}
 </main>
 
 <style>
@@ -291,6 +362,33 @@
   }
   .error-hint a:hover,
   .error-hint a:focus-visible { color: var(--ink); outline: none; }
+
+  /* The fatal-error screen behind fifteen stacked alerts. Full desktop,
+     no window chrome — a real Sad Mac wasn't in a window either. */
+  .dead-mac {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .dead-mac-icon { color: var(--ink); }
+
+  .dead-mac-code {
+    margin: 0;
+    font-family: var(--pixel);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+
+  .dead-mac-note {
+    margin: 0;
+    max-width: 320px;
+    font-size: 13px;
+    text-align: center;
+    color: var(--ink-soft);
+  }
 
   .sr-only {
     position: absolute;

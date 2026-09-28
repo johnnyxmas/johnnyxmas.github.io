@@ -8,6 +8,8 @@
   let isMuted = $state(true);
   let clock = $state('');
   let clockTimer;
+  let litMenuIndex = $state(-1);
+  let menuHighlightTimer;
 
   // 'system' follows the OS; 'light'/'dark' are explicit overrides.
   let themePreference = $state('system');
@@ -49,10 +51,21 @@
     systemPrefersDark = darkMediaQuery.matches;
     handleDarkMediaChange = (e) => { systemPrefersDark = e.matches; };
     darkMediaQuery.addEventListener('change', handleDarkMediaChange);
+
+    // Attract-mode for the nav: step an inverted highlight across the
+    // menu items so the bar doesn't just sit there unnoticed. Skipped
+    // for anyone who's asked for less motion.
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      litMenuIndex = 0;
+      menuHighlightTimer = setInterval(() => {
+        litMenuIndex = (litMenuIndex + 1) % menus.length;
+      }, 2000);
+    }
   });
 
   onDestroy(() => {
     if (clockTimer) clearInterval(clockTimer);
+    if (menuHighlightTimer) clearInterval(menuHighlightTimer);
     if (darkMediaQuery && handleDarkMediaChange) {
       darkMediaQuery.removeEventListener('change', handleDarkMediaChange);
     }
@@ -143,8 +156,8 @@
       <path d="M13.1 0c.2 1.8-1.1 3.8-2.9 4C10 2.2 11.5.3 13.1 0z"/>
     </svg>
   </span>
-  {#each menus as menu}
-    <a class="menubar-item" href={menu.href}>{menu.text}</a>
+  {#each menus as menu, i}
+    <a class="menubar-item" class:is-lit={i === litMenuIndex} href={menu.href}>{menu.text}</a>
   {/each}
   <button
     type="button"
@@ -225,7 +238,9 @@
   <section class="win" aria-label="Conferences spoken at">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">Stages Since 2004</h2>
+      <a class="win-bar-link" href="/speaking/#appearances">
+        <h2 class="win-title">On Stages since 2002</h2>
+      </a>
     </div>
     <div class="win-body">
       <ul class="con-wall">
@@ -244,7 +259,9 @@
   <section id="speaking" class="win">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">Speaking</h2>
+      <a class="win-bar-link" href="/speaking/">
+        <h2 class="win-title">Speaking</h2>
+      </a>
     </div>
     <div class="win-body">
       <p class="win-prose">
@@ -265,7 +282,9 @@
   <section id="media-presentations" class="win">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">Media and Presentations</h2>
+      <a class="win-bar-link" href="/media-coverage/">
+        <h2 class="win-title">Media and Presentations</h2>
+      </a>
     </div>
     <div class="win-body">
       <ul class="link-list">
@@ -319,7 +338,9 @@
   <section id="podcasts" class="win">
     <div class="win-bar">
       <span class="win-close" aria-hidden="true"></span>
-      <h2 class="win-title">Podcasts</h2>
+      <a class="win-bar-link" href="https://igot.one" target="_blank" rel="noopener noreferrer">
+        <h2 class="win-title">Podcasts</h2>
+      </a>
     </div>
     <div class="win-body">
       <ul class="link-list">

@@ -8,9 +8,16 @@
 // where a source stated one; the array order is the display order.
 
 export const appearances = [
+  { event: "Cyber Leaders' Summit", year: '2026', talk: '5 Lies Enterprise Security Still Tells Itself' },
+  { event: 'SecretCon', year: '2026', talk: '5 Lies Enterprise Security Still Tells Itself' },
+  { event: 'OzCon', year: '2026', talk: '5 Lies Enterprise Security Still Tells Itself' },
+  { event: 'Hackfest Canada', year: '2026', talk: '5 Lies Enterprise Security Still Tells Itself' },
+  { event: 'HoboCon', year: '2026', talk: 'Superposition, not Superstition' },
+  { event: 'Blue Team Con', year: '2026', talk: 'Superposition, not Superstition' },
+  { event: 'DEF CON 33', year: '2025', talk: 'Poisoning Pidgins in the Park (Malware Village keynote)' },
   { event: 'DefCamp', year: '2025', talk: 'Poisoning Pidgins in the Park' },
   { event: 'ManuSec Summit', year: '2025', talk: "Your OT Environment Isn't Ready for a Pentest" },
-  { event: 'Hackfest', year: '2025', talk: 'InfoSecs and the City — the BurbSec meetup framework (panel)' },
+  { event: 'Hackfest Canada', year: '2025', talk: 'InfoSecs and the City — the BurbSec meetup framework (panel)' },
   { event: 'CypherCon 7.0', year: '2024', talk: "Saving Ryan's Privates: How Nudes Still Leak" },
   { event: 'SecretCon', year: '2024', talk: 'Hacking Large Companies in 2024' },
   { event: 'ISSA Chicago', year: '2024', talk: 'SIEM and the Art of Motorcycle Maintenance' },
@@ -33,15 +40,15 @@ export const appearances = [
   { event: 'GrrCON', year: '2017', talk: '10 Cent Beer Night: The World We Now Live In (keynote)' },
   { event: 'BSides Las Vegas', year: '2017', talk: 'How to Accidentally Get a Job in InfoSec' },
   { event: 'THOTCON 0x8', year: '2017', talk: 'How I Darkweb Economies (and You Can Too!)' },
-  { event: 'Hackfest', year: '2017', talk: 'How to Pwn an Enterprise in 2017 (or 2016, or 2015…)' },
+  { event: 'Hackfest Canada', year: '2017', talk: 'How to Pwn an Enterprise in 2017 (or 2016, or 2015…)' },
   { event: 'Anomali Cyber Threat Day', year: '2017', talk: 'Operationalizing Threat Intelligence' },
   { event: 'The Eleventh HOPE', year: '2016', talk: 'The TSA Keys Leak: Government Backdoors and the Dangers of Security Theater' },
-  { event: 'Hackfest', year: '2016', talk: 'How to Buy Anything on the Dark Web' },
+  { event: 'Hackfest Canada', year: '2016', talk: 'How to Buy Anything on the Dark Web' },
   { event: 'CypherCon', year: '2016', talk: "You're Right, This Sucks (with Lesley Carhart)" },
   { event: 'BSides Nashville', year: '2016', talk: 'InfoSecs in the City: Starting a Successful CitySec Meetup' },
   { event: 'ShowMeCon', year: '2016', talk: 'IRL Networking for the Recovering Introvert, Part 3' },
   { event: 'GenCon 49', year: '2016', talk: 'Hacking in Fiction: The Good, The Bad and The Bizarre' },
-  { event: 'Hackfest', year: '2015', talk: '1993 B.C.: Get Off My LAN! (Hacking in the Olden Days)' },
+  { event: 'Hackfest Canada', year: '2015', talk: '1993 B.C.: Get Off My LAN! (Hacking in the Olden Days)' },
   { event: 'CircleCityCon', year: '2015', talk: '1993 B.C.: Before Cellphones' },
   { event: 'Converge Detroit', year: '2015', talk: "That's Not My RJ45 Jack! IRL Networking for Humans, Part 2" },
   { event: 'ShowMeCon', year: '2015', talk: "That's Not My RJ45 Jack! IRL Networking for Humans" },
@@ -57,9 +64,10 @@ export const appearances = [
 // there is a recording of, and it is not the whole speaking history.
 export const conWall = [
   'DEF CON', 'DefCamp', 'HOPE', 'DerbyCon', 'GrrCON', 'THOTCON', 'CypherCon',
-  'Hackfest', 'BSides Las Vegas', 'QCon New York', 'ManuSec Summit',
+  'Hackfest Canada', 'BSides Las Vegas', 'QCon New York', 'ManuSec Summit',
   'CircleCityCon', 'ShowMeCon', 'DakotaCon', 'SecretCon', 'Graylog GO!',
   'Rochester Security Summit', 'Securing Sexuality', 'ISSA Chicago',
   'Converge Detroit', 'WOPR Summit', 'BSides Nashville', 'BSides Detroit',
   'GRIMM', 'Hak4Kidz', 'PhreakNIC', 'GenCon', 'BSides312',
+  "Cyber Leaders' Summit", 'OzCon', 'HoboCon', 'Blue Team Con',
 ];

@@ -149,6 +149,27 @@ a.menubar-apple:focus-visible {
   outline: none;
 }
 
+/* Attract-mode: an inverted highlight steps across the menu items
+   on its own so a static nav bar doesn't get overlooked. Driven by
+   JS toggling .is-lit on one item at a time; reuses the hover look
+   so there's only one "selected" visual in the whole file. Paused
+   the moment a real hover/focus takes over, so two items are never
+   inverted at once. */
+.menubar-item.is-lit {
+  background: var(--ink);
+  color: var(--paper);
+}
+.menubar:hover .menubar-item.is-lit:not(:hover) {
+  background: none;
+  color: var(--ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .menubar-item.is-lit {
+    background: none;
+    color: var(--ink);
+  }
+}
+
 .menubar-theme {
   margin-left: auto;
   display: flex;
@@ -224,6 +245,7 @@ a.menubar-apple:focus-visible {
 }
 
 .win-bar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -235,6 +257,36 @@ a.menubar-apple:focus-visible {
     var(--paper) 1px 3px
   );
 }
+
+/* A card whose title bar links out. The anchor only wraps the title
+   text, but its ::before is stretched over the whole bar (the nearest
+   positioned ancestor) so the entire strip is clickable, and :has()
+   inverts the bar the same way a menubar item inverts on hover. */
+.win-bar-link {
+  display: inline-flex;
+  margin: 0 auto;
+  text-decoration: none;
+  color: inherit;
+}
+.win-bar-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.win-bar:has(.win-bar-link:hover),
+.win-bar:has(.win-bar-link:focus-visible) {
+  cursor: pointer;
+  background-image: none;
+  background: var(--ink);
+}
+.win-bar:has(.win-bar-link:hover) .win-title,
+.win-bar:has(.win-bar-link:focus-visible) .win-title,
+.win-bar:has(.win-bar-link:hover) .win-close,
+.win-bar:has(.win-bar-link:focus-visible) .win-close {
+  background: var(--ink);
+  color: var(--paper);
+}
+.win-bar-link:focus-visible { outline: none; }
 
 .win-close {
   flex: none;
