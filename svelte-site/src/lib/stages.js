@@ -36,6 +36,7 @@ export const appearances = [
   { event: 'Rochester Security Summit', year: '2019', talk: "Keynote: the InfoSec bubble and the glass ceiling we built" },
   { event: 'QCon New York', year: '2019', talk: 'WAF Anti-Bot Bypasses' },
   { event: 'The Circle of HOPE', year: '2018', talk: 'How to Pwn an Enterprise in 2018 (and 2019, and 2020…)' },
+  { event: 'RSA Conference', year: '2018', talk: 'Hacking Robots like its 1979' },
   { event: 'Hackfest Canada 10', year: '2018', talk: 'Shut Up and Take My Money: Scraping the Venmo Public Feed' },
   { event: 'GrrCON', year: '2017', talk: '10 Cent Beer Night: The World We Now Live In (keynote)' },
   { event: 'BSides Las Vegas', year: '2017', talk: 'How to Accidentally Get a Job in InfoSec' },
@@ -63,7 +64,7 @@ export const appearances = [
 // is deliberately broader than `appearances` above: that list is only what
 // there is a recording of, and it is not the whole speaking history.
 export const conWall = [
-  'DEF CON', 'DefCamp', 'HOPE', 'DerbyCon', 'GrrCON', 'THOTCON', 'CypherCon',
+  'DEF CON', 'RSA Conference', 'DefCamp', 'HOPE', 'DerbyCon', 'GrrCON', 'THOTCON', 'CypherCon',
   'Hackfest Canada', 'BSides Las Vegas', 'QCon New York', 'ManuSec Summit',
   'CircleCityCon', 'ShowMeCon', 'DakotaCon', 'SecretCon', 'Graylog GO!',
   'Rochester Security Summit', 'Securing Sexuality', 'ISSA Chicago',
