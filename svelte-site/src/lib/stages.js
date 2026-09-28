@@ -8,6 +8,7 @@
 // where a source stated one; the array order is the display order.
 
 export const appearances = [
+  { event: 'DefCamp', year: '2026', talk: '5 Lies Enterprise Security Still Tells Itself' },
   { event: "Cyber Leaders' Summit", year: '2026', talk: '5 Lies Enterprise Security Still Tells Itself' },
   { event: 'SecretCon', year: '2026', talk: '5 Lies Enterprise Security Still Tells Itself' },
   { event: 'OzCon', year: '2026', talk: '5 Lies Enterprise Security Still Tells Itself' },
